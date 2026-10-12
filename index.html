@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Zon 2: Rima Rimba AR</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
@@ -13,34 +14,40 @@
   box-sizing: border-box;
 }
 
+:root {
+  --green: #16854b;
+  --dark: #27543a;
+  --cream: #fff9e8;
+}
+
 body {
   margin: 0;
   font-family: "Trebuchet MS", Arial, sans-serif;
-  color: #24513b;
-  background: linear-gradient(#b7f0ff, #e4ffd4);
+  color: var(--dark);
+  background: linear-gradient(#b8eeff, #e5ffd8);
 }
 
 header {
-  padding: 20px;
+  padding: 20px 12px;
   text-align: center;
   color: white;
-  background: linear-gradient(120deg, #13834b, #6bc64b);
-  border-bottom: 7px solid #ffda6c;
+  background: linear-gradient(120deg, #14884d, #70c94e);
+  border-bottom: 7px solid #ffdc76;
 }
 
 header h1 {
   margin: 0;
-  font-size: clamp(27px, 5vw, 42px);
+  font-size: clamp(25px, 4.5vw, 40px);
 }
 
 .container {
   max-width: 1050px;
   margin: auto;
-  padding: 16px;
+  padding: 15px;
 }
 
 .intro {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
   padding: 13px;
   text-align: center;
   font-weight: bold;
@@ -49,30 +56,32 @@ header h1 {
   border-radius: 18px;
 }
 
+/* PERMAINAN */
+
 .game {
   position: relative;
-  height: 630px;
+  height: 670px;
   overflow: hidden;
   isolation: isolate;
   border: 7px solid white;
   border-radius: 25px;
   background: linear-gradient(
     #7bd8ff 0%,
-    #d2f5ff 42%,
-    #92d66e 43%,
-    #4bb05a 100%
+    #d5f5ff 42%,
+    #91d96e 43%,
+    #4aaf5a 100%
   );
   box-shadow: 0 8px 22px #285b3b40;
 }
 
 .sun {
   position: absolute;
-  top: 28px;
-  right: 40px;
+  top: 25px;
+  right: 35px;
   width: 85px;
   height: 85px;
   border-radius: 50%;
-  background: #ffe177;
+  background: #ffe17b;
   box-shadow: 0 0 35px #fff2a0;
 }
 
@@ -83,30 +92,35 @@ header h1 {
 }
 
 .cloud.one {
-  top: 10px;
+  top: 8px;
   left: 5%;
 }
 
 .cloud.two {
-  top: 40px;
+  top: 38px;
   right: 18%;
 }
 
 .tree {
   position: absolute;
   bottom: 85px;
-  font-size: 100px;
+  font-size: 95px;
   pointer-events: none;
 }
 
-.tree.left { left: -15px; }
-.tree.right { right: -15px; }
+.tree.left {
+  left: -15px;
+}
+
+.tree.right {
+  right: -15px;
+}
 
 .grass {
   position: absolute;
   bottom: -20px;
   width: 100%;
-  height: 100px;
+  height: 105px;
   border-radius: 50% 50% 0 0;
   background: #298e44;
   pointer-events: none;
@@ -115,21 +129,31 @@ header h1 {
 .animal {
   position: absolute;
   bottom: 25px;
-  font-size: 65px;
+  font-size: 60px;
   pointer-events: none;
-  animation: bounce 2.5s ease-in-out infinite;
+  animation: animalBounce 2.5s ease-in-out infinite;
 }
 
-.animal.left { left: 4%; }
+.animal.left {
+  left: 4%;
+}
+
 .animal.right {
   right: 5%;
   animation-delay: 1s;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+@keyframes animalBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
+
+/* KAMERA */
 
 #camera {
   position: absolute;
@@ -144,7 +168,7 @@ header h1 {
 }
 
 #camera.active {
-  opacity: .5;
+  opacity: .42;
 }
 
 .overlay {
@@ -154,6 +178,8 @@ header h1 {
   pointer-events: none;
 }
 
+/* PANTUN */
+
 .question {
   position: absolute;
   top: 12px;
@@ -161,11 +187,11 @@ header h1 {
   transform: translateX(-50%);
   z-index: 3;
   width: min(94%, 800px);
-  padding: 16px 12px;
+  padding: 15px 12px;
   text-align: center;
-  font-size: clamp(19px, 2.6vw, 25px);
+  font-size: clamp(18px, 2.6vw, 24px);
   font-weight: bold;
-  line-height: 1.55;
+  line-height: 1.5;
   background: #fffdf0f5;
   border: 4px solid #f7d36c;
   border-radius: 20px;
@@ -173,23 +199,106 @@ header h1 {
 }
 
 .question-title {
-  margin-bottom: 6px;
-  color: #16854a;
-  font-size: clamp(22px, 3vw, 29px);
+  margin-bottom: 5px;
+  color: var(--green);
+  font-size: clamp(23px, 3vw, 30px);
 }
+
+.pantun-lines {
+  line-height: 1.6;
+}
+
+.listen-button {
+  margin-top: 10px;
+  padding: 9px 17px;
+  color: white;
+  background: #3483d4;
+  border: none;
+  border-radius: 13px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.listen-button:hover {
+  background: #216ab1;
+}
+
+.listen-button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
+/* PERINGATAN RIMA */
+
+.rhyme-box {
+  position: absolute;
+  top: 250px;
+  left: 14px;
+  z-index: 3;
+  width: 158px;
+  padding: 10px;
+  background: #fff9e9f5;
+  border: 3px solid #f4c765;
+  border-radius: 16px;
+  font-size: 13px;
+  box-shadow: 0 4px 10px #0002;
+}
+
+.rhyme-heading {
+  margin-bottom: 8px;
+  text-align: center;
+  font-weight: bold;
+  color: #97600c;
+}
+
+.rhyme-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 7px;
+  margin-bottom: 4px;
+  background: white;
+  border-radius: 8px;
+}
+
+.rhyme-letter {
+  min-width: 23px;
+  padding: 2px 5px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  background: #4c9d62;
+  border-radius: 6px;
+}
+
+.rhyme-row:nth-of-type(3) .rhyme-letter,
+.rhyme-row:nth-of-type(5) .rhyme-letter {
+  background: #d99040;
+}
+
+.rhyme-note {
+  margin-top: 7px;
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* PETAK JAWAPAN */
 
 .answer-zone {
   position: absolute;
-  top: 58%;
+  top: 61%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 4;
-  width: min(65%, 340px);
-  min-height: 85px;
+  width: min(60%, 330px);
+  min-height: 86px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 13px;
+  padding: 12px;
   text-align: center;
   color: white;
   background: #197647ed;
@@ -216,9 +325,17 @@ header h1 {
 }
 
 @keyframes shake {
-  0%, 100% { margin-left: 0; }
-  25% { margin-left: -9px; }
-  75% { margin-left: 9px; }
+  0%, 100% {
+    margin-left: 0;
+  }
+
+  25% {
+    margin-left: -9px;
+  }
+
+  75% {
+    margin-left: 9px;
+  }
 }
 
 .action {
@@ -239,17 +356,17 @@ header h1 {
 
 #startBtn {
   pointer-events: auto;
-  padding: 16px 26px;
+  padding: 16px 25px;
   color: #24513b;
   background: #ffdf70;
-  font-size: 22px;
+  font-size: 21px;
 }
 
 #startBtn:hover {
   background: #ffe995;
 }
 
-/* KAWASAN KUMBANG TERBANG */
+/* KAWASAN KUMBANG */
 
 .cards {
   position: absolute;
@@ -257,7 +374,7 @@ header h1 {
   right: 3%;
   bottom: 10px;
   z-index: 6;
-  height: 200px;
+  height: 190px;
   pointer-events: none;
 }
 
@@ -268,7 +385,7 @@ header h1 {
   width: 132px;
   height: 124px;
   padding: 0;
-  border: 0;
+  border: none;
   background: transparent;
   cursor: grab;
   touch-action: none;
@@ -279,21 +396,20 @@ header h1 {
   will-change: left, top;
 }
 
+.bug-card.selected {
+  cursor: grabbing;
+}
+
+.bug-card.captured {
+  z-index: 80;
+  filter: drop-shadow(0 0 14px #ffe66a);
+}
+
 .bug-card:focus-visible {
   outline: 4px solid white;
   border-radius: 20px;
 }
 
-.bug-card.selected {
-  cursor: grabbing;
-  filter: drop-shadow(0 0 12px #ffe66a);
-}
-
-.bug-card:disabled {
-  opacity: .65;
-}
-
-/* SVG kumbang */
 .bug-picture {
   position: absolute;
   top: 0;
@@ -315,13 +431,23 @@ header h1 {
 }
 
 @keyframes wingLeft {
-  from { transform: rotate(-6deg); }
-  to { transform: rotate(-23deg); }
+  from {
+    transform: rotate(-6deg);
+  }
+
+  to {
+    transform: rotate(-23deg);
+  }
 }
 
 @keyframes wingRight {
-  from { transform: rotate(6deg); }
-  to { transform: rotate(23deg); }
+  from {
+    transform: rotate(6deg);
+  }
+
+  to {
+    transform: rotate(23deg);
+  }
 }
 
 .bug-label {
@@ -331,8 +457,7 @@ header h1 {
   transform: translateX(-50%);
   min-width: 100px;
   max-width: 132px;
-  padding: 7px 9px;
-  text-align: center;
+  padding: 7px 8px;
   color: #503819;
   background: #fff1ad;
   border: 3px solid white;
@@ -343,11 +468,7 @@ header h1 {
   box-shadow: 0 3px 0 #cda541;
 }
 
-/* Kumbang sebenar bergerak bersama tangan */
-.bug-card.captured {
-  z-index: 80;
-  filter: drop-shadow(0 0 13px #ffe66a);
-}
+/* KURSOR TANGAN */
 
 .cursor {
   position: absolute;
@@ -368,6 +489,8 @@ header h1 {
   transform: translate(-50%, -50%) scale(.8);
 }
 
+/* BINTANG */
+
 .stars-layer {
   position: absolute;
   inset: 0;
@@ -387,7 +510,11 @@ header h1 {
     opacity: 0;
     transform: translate(-50%, -50%) scale(.3);
   }
-  20% { opacity: 1; }
+
+  20% {
+    opacity: 1;
+  }
+
   100% {
     opacity: 0;
     transform:
@@ -395,9 +522,47 @@ header h1 {
         calc(-50% + var(--dx)),
         calc(-50% + var(--dy))
       )
-      rotate(200deg) scale(1.4);
+      rotate(200deg)
+      scale(1.4);
   }
 }
+
+/* KONFETI */
+
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 110;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  top: -25px;
+  width: 11px;
+  height: 17px;
+  border-radius: 3px;
+  opacity: 0;
+  animation: confettiFall var(--duration) linear forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes confettiFall {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, -20px, 0) rotate(0deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      translate3d(var(--drift), 740px, 0)
+      rotate(var(--rotation));
+  }
+}
+
+/* PANEL */
 
 .panel {
   margin-top: 15px;
@@ -442,14 +607,16 @@ header h1 {
   background: #e6a523;
 }
 
+/* PAPARAN TAMAT */
+
 .game.finished .question {
-  top: 31%;
-  width: min(90%, 650px);
-  padding: 28px 18px;
+  top: 18%;
+  width: min(90%, 600px);
+  padding: 25px 18px;
   background: #fffdf0;
   border: 5px solid #ffd568;
-  font-size: clamp(20px, 3vw, 28px);
-  line-height: 1.8;
+  font-size: 21px;
+  line-height: 1.6;
   box-shadow: 0 8px 25px #0003;
 }
 
@@ -460,33 +627,133 @@ header h1 {
 .finish-title {
   margin-bottom: 10px;
   color: #16854a;
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: clamp(30px, 5vw, 44px);
+}
+
+.medal {
+  position: relative;
+  width: 125px;
+  height: 155px;
+  margin: 10px auto;
+  animation: medalPop .8s ease-out both;
+}
+
+.medal-ribbon {
+  position: absolute;
+  top: 70px;
+  width: 45px;
+  height: 80px;
+  background: #e86f89;
+}
+
+.medal-ribbon.left {
+  left: 18px;
+  transform: rotate(13deg);
+}
+
+.medal-ribbon.right {
+  right: 18px;
+  background: #5a9fd7;
+  transform: rotate(-13deg);
+}
+
+.medal-circle {
+  position: absolute;
+  top: 8px;
+  left: 9px;
+  width: 107px;
+  height: 107px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 8px solid #e2a63e;
+  border-radius: 50%;
+  background: #ffe18c;
+  color: #c48724;
+  font-size: 58px;
+  box-shadow: 0 4px 8px #0003;
+}
+
+@keyframes medalPop {
+  0% {
+    opacity: 0;
+    transform: scale(.3) rotate(-15deg);
+  }
+
+  65% {
+    transform: scale(1.15) rotate(5deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+.medal-name {
+  color: #c17c16;
+  font-size: clamp(20px, 3vw, 27px);
+  font-weight: bold;
 }
 
 .game.finished .answer-zone,
-.game.finished .cards {
+.game.finished .cards,
+.game.finished .rhyme-box {
   display: none;
 }
 
+/* TELEFON */
+
 @media (max-width: 600px) {
-  .game { height: 670px; }
-  .tree { font-size: 65px; }
-  .animal { font-size: 42px; }
+  .game {
+    height: 720px;
+  }
+
+  .tree {
+    font-size: 65px;
+  }
+
+  .animal {
+    font-size: 42px;
+  }
 
   .question {
-    top: 10px;
-    padding: 12px 8px;
-    font-size: clamp(17px, 4vw, 21px);
-    line-height: 1.5;
+    top: 8px;
+    padding: 11px 7px;
+    font-size: clamp(16px, 4vw, 20px);
+    line-height: 1.4;
+  }
+
+  .question-title {
+    font-size: 23px;
+  }
+
+  .listen-button {
+    padding: 8px 11px;
+    font-size: 13px;
+  }
+
+  .rhyme-box {
+    top: 270px;
+    left: 7px;
+    width: 130px;
+    padding: 7px;
+    font-size: 11px;
+  }
+
+  .rhyme-note {
+    font-size: 10px;
   }
 
   .answer-zone {
-    top: 57%;
-    width: 76%;
+    top: 66%;
+    width: 70%;
+    min-height: 78px;
+    font-size: 16px;
   }
 
   .cards {
-    height: 205px;
+    height: 195px;
     bottom: 8px;
   }
 
@@ -503,15 +770,51 @@ header h1 {
   .bug-label {
     min-width: 92px;
     max-width: 105px;
-    font-size: 13px;
     padding: 6px 4px;
+    font-size: 13px;
+  }
+
+  .game.finished .question {
+    top: 18%;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .game {
+    height: 740px;
+  }
+
+  .rhyme-box {
+    top: 278px;
+    width: 118px;
+  }
+
+  .answer-zone {
+    top: 66%;
+    width: 74%;
+  }
+
+  .bug-card {
+    width: 96px;
+  }
+
+  .bug-picture {
+    width: 84px;
+  }
+
+  .bug-label {
+    min-width: 85px;
+    max-width: 96px;
+    font-size: 12px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animal,
   .bug-wing-left,
-  .bug-wing-right {
+  .bug-wing-right,
+  .medal {
     animation: none;
   }
 }
@@ -535,13 +838,21 @@ header h1 {
     <div class="sun"></div>
     <div class="cloud one">☁️</div>
     <div class="cloud two">☁️</div>
+
     <div class="grass"></div>
+
     <div class="tree left">🌳</div>
     <div class="tree right">🌴</div>
+
     <div class="animal left">🪲</div>
     <div class="animal right">🦋</div>
 
-    <video id="camera" autoplay muted playsinline></video>
+    <video
+      id="camera"
+      autoplay
+      muted
+      playsinline
+    ></video>
 
     <div class="overlay">
 
@@ -550,15 +861,56 @@ header h1 {
         Tekan butang Mula Bermain!
       </div>
 
+      <div class="rhyme-box" id="rhymeBox" hidden>
+
+        <div class="rhyme-heading">
+          🌸 Ingat Rima a-b-a-b
+        </div>
+
+        <div class="rhyme-row">
+          <span>Baris 1</span>
+          <span class="rhyme-letter">a</span>
+        </div>
+
+        <div class="rhyme-row">
+          <span>Baris 2</span>
+          <span class="rhyme-letter">b</span>
+        </div>
+
+        <div class="rhyme-row">
+          <span>Baris 3</span>
+          <span class="rhyme-letter">a</span>
+        </div>
+
+        <div class="rhyme-row">
+          <span>Baris 4</span>
+          <span class="rhyme-letter">b</span>
+        </div>
+
+        <div class="rhyme-note">
+          Bunyi akhir baris 1 sama dengan baris 3.
+          Baris 2 sama dengan baris 4.
+        </div>
+
+      </div>
+
       <div class="answer-zone" id="target">
-        <button class="action" id="startBtn" type="button">
+        <button
+          class="action"
+          id="startBtn"
+          type="button"
+        >
           ▶ Mula Bermain
         </button>
       </div>
 
       <div class="cards" id="cards"></div>
+
       <div class="cursor" id="cursor"></div>
+
       <div class="stars-layer" id="starsLayer"></div>
+
+      <div class="confetti-layer" id="confettiLayer"></div>
 
     </div>
   </div>
@@ -590,9 +942,13 @@ header h1 {
     <p>
       1. Tekan butang <strong>Mula Bermain</strong>.<br>
       2. Baca pantun dengan teliti.<br>
-      3. Cari kumbang yang membawa jawapan yang betul.<br>
-      4. Tangkap kumbang dan bawa ke petak hijau.<br>
-      5. Lengkapkan kelima-lima misi.
+      3. Tekan <strong>🔊 Dengar Pantun</strong>
+      jika mahu mendengar bacaan pantun.<br>
+      4. Ingat susunan rima pantun a-b-a-b.<br>
+      5. Cari kumbang yang membawa jawapan yang betul.<br>
+      6. Tangkap kumbang dan bawa ke petak hijau.<br>
+      7. Lengkapkan kelima-lima misi untuk
+      mendapatkan lencana Wira Rima Rimba.
     </p>
 
     <strong>🖐️ Kamera AR:</strong>
@@ -600,7 +956,8 @@ header h1 {
     <p>
       Halakan jari telunjuk pada kumbang.
       Cubit ibu jari dan jari telunjuk untuk menangkapnya.
-      Gerakkan tangan ke petak hijau dan lepaskan cubitan.
+      Gerakkan tangan ke petak hijau,
+      kemudian lepaskan cubitan.
     </p>
 
     <strong>🖱️ Tetikus atau Sentuhan:</strong>
@@ -618,9 +975,9 @@ header h1 {
 <script>
 "use strict";
 
-// =======================================
+// ==========================================
 // 1. LIMA SOALAN PANTUN ASAL
-// =======================================
+// ==========================================
 
 const questions = [
   {
@@ -630,7 +987,11 @@ const questions = [
       "Taman negara diberikan nama,",
       "Jadikan tempat indah _____."
     ],
-    choices: ["lestari", "bersih", "nyaman"],
+    choices: [
+      "lestari",
+      "bersih",
+      "nyaman"
+    ],
     answer: "lestari"
   },
   {
@@ -640,7 +1001,11 @@ const questions = [
       "Taman negara tanahnya tinggi,",
       "Jadi kawasan tadahan _____."
     ],
-    choices: ["hujan", "air", "sungai"],
+    choices: [
+      "hujan",
+      "air",
+      "sungai"
+    ],
     answer: "air"
   },
   {
@@ -650,7 +1015,11 @@ const questions = [
       "Taman negara perlu _____,",
       "Kitaran alam kekal selamanya."
     ],
-    choices: ["diterokai", "dimusnahkan", "dilindungi"],
+    choices: [
+      "diterokai",
+      "dimusnahkan",
+      "dilindungi"
+    ],
     answer: "dilindungi"
   },
   {
@@ -660,7 +1029,11 @@ const questions = [
       "Hutan dijaga setiap _____,",
       "Supaya haiwan terus dilindungi."
     ],
-    choices: ["rumah", "hari", "batu"],
+    choices: [
+      "rumah",
+      "hari",
+      "batu"
+    ],
     answer: "hari"
   },
   {
@@ -670,14 +1043,18 @@ const questions = [
       "Taman negara banyak pokok,",
       "Hakisan tanah dapat _____."
     ],
-    choices: ["berlaku", "meningkat", "dihindari"],
+    choices: [
+      "berlaku",
+      "meningkat",
+      "dihindari"
+    ],
     answer: "dihindari"
   }
 ];
 
-// =======================================
+// ==========================================
 // 2. ELEMEN
-// =======================================
+// ==========================================
 
 const gameEl = document.getElementById("game");
 const video = document.getElementById("camera");
@@ -691,10 +1068,12 @@ const startBtn = document.getElementById("startBtn");
 const helpBtn = document.getElementById("helpBtn");
 const instructionsEl = document.getElementById("instructions");
 const starsLayer = document.getElementById("starsLayer");
+const confettiLayer = document.getElementById("confettiLayer");
+const rhymeBox = document.getElementById("rhymeBox");
 
-// =======================================
+// ==========================================
 // 3. PEMBOLEH UBAH
-// =======================================
+// ==========================================
 
 let currentQuestion = 0;
 let score = 0;
@@ -704,11 +1083,11 @@ let answered = false;
 let selectedCard = null;
 let dragMode = null;
 let activePointerId = null;
+
 let pointerStartX = 0;
 let pointerStartY = 0;
 let pointerMoved = false;
 
-// Kedudukan kumbang ketika ditangkap.
 let dragOffsetX = 0;
 let dragOffsetY = 0;
 
@@ -717,14 +1096,19 @@ let cameraStream = null;
 let tracking = false;
 let processing = false;
 let previousPinch = false;
+
 let handX = 0;
 let handY = 0;
 
 let nextQuestionTimer = null;
 let feedbackTimer = null;
+let confettiTimer = null;
 
 let flyingBugs = [];
 let lastAnimationTime = 0;
+
+let audioContext = null;
+let isSpeaking = false;
 
 const BUG_COLORS = [
   "#f46d79",
@@ -732,9 +1116,9 @@ const BUG_COLORS = [
   "#a0d875"
 ];
 
-// =======================================
+// ==========================================
 // 4. CARA BERMAIN
-// =======================================
+// ==========================================
 
 helpBtn.addEventListener("click", function() {
   const opening = instructionsEl.hidden;
@@ -751,9 +1135,9 @@ helpBtn.addEventListener("click", function() {
     : "📖 Cara Bermain";
 });
 
-// =======================================
-// 5. RAWAKKAN JAWAPAN
-// =======================================
+// ==========================================
+// 5. RAWAKKAN PILIHAN JAWAPAN
+// ==========================================
 
 function shuffleChoices(choices) {
   const result = [...choices];
@@ -767,15 +1151,19 @@ function shuffleChoices(choices) {
   return result;
 }
 
-// =======================================
+// ==========================================
 // 6. MULA PERMAINAN
-// =======================================
+// ==========================================
 
 startBtn.addEventListener("click", startGame);
 
 function startGame() {
   clearTimeout(nextQuestionTimer);
   clearTimeout(feedbackTimer);
+  clearTimeout(confettiTimer);
+
+  stopPantunAudio();
+  stopDragging();
 
   currentQuestion = 0;
   score = 0;
@@ -783,7 +1171,9 @@ function startGame() {
   answered = false;
 
   gameEl.classList.remove("finished");
+
   starsLayer.innerHTML = "";
+  confettiLayer.innerHTML = "";
 
   showQuestion();
 }
@@ -795,8 +1185,14 @@ function escapeHTML(value) {
     .replaceAll(">", "&gt;");
 }
 
+// ==========================================
+// 7. PAPAR SOALAN
+// ==========================================
+
 function showQuestion() {
   stopDragging();
+  stopPantunAudio();
+
   clearTimeout(feedbackTimer);
 
   answered = false;
@@ -813,17 +1209,30 @@ function showQuestion() {
 
   messageEl.textContent = "";
 
+  rhymeBox.hidden = false;
+
   const q = questions[currentQuestion];
 
-  // Tajuk baharu: Misi 1/5, Misi 2/5 dan seterusnya.
-  questionEl.innerHTML =
-    '<div class="question-title">' +
-      '🐞 Misi ' +
-      (currentQuestion + 1) +
-      '/' +
-      questions.length +
-    '</div>' +
-    q.lines.map(escapeHTML).join("<br>");
+  questionEl.innerHTML = `
+    <div class="question-title">
+      🐞 Misi ${currentQuestion + 1}/${questions.length}
+    </div>
+
+    <div class="pantun-lines">
+      ${q.lines.map(escapeHTML).join("<br>")}
+    </div>
+
+    <button
+      class="listen-button"
+      id="listenBtn"
+      type="button"
+    >
+      🔊 Dengar Pantun
+    </button>
+  `;
+
+  document.getElementById("listenBtn")
+    .addEventListener("click", togglePantunAudio);
 
   cardsEl.innerHTML = "";
   flyingBugs = [];
@@ -832,6 +1241,7 @@ function showQuestion() {
 
   choices.forEach(function(choice, index) {
     const card = createBugCard(choice, index);
+
     cardsEl.appendChild(card);
 
     flyingBugs.push({
@@ -848,9 +1258,116 @@ function showQuestion() {
   requestAnimationFrame(initializeBugPositions);
 }
 
-// =======================================
-// 7. HASILKAN KUMBANG KAWAII
-// =======================================
+// ==========================================
+// 8. AUDIO PANTUN
+// ==========================================
+
+function stopPantunAudio() {
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
+
+  isSpeaking = false;
+
+  const button = document.getElementById("listenBtn");
+
+  if (button) {
+    button.textContent = "🔊 Dengar Pantun";
+  }
+}
+
+function getMalayVoice() {
+  if (!("speechSynthesis" in window)) {
+    return null;
+  }
+
+  const voices = window.speechSynthesis.getVoices();
+
+  return (
+    voices.find(function(voice) {
+      return voice.lang.toLowerCase() === "ms-my";
+    }) ||
+    voices.find(function(voice) {
+      return voice.lang.toLowerCase().startsWith("ms");
+    }) ||
+    null
+  );
+}
+
+function togglePantunAudio() {
+  if (!("speechSynthesis" in window)) {
+    messageEl.textContent =
+      "🔇 Pelayar ini tidak menyokong audio bacaan.";
+    messageEl.style.color = "#c73530";
+    return;
+  }
+
+  if (isSpeaking) {
+    stopPantunAudio();
+    return;
+  }
+
+  stopPantunAudio();
+
+  const q = questions[currentQuestion];
+
+  // Sebutan kosong ditukar kepada jeda
+  // supaya ayat masih boleh dibacakan.
+  const text = q.lines
+    .map(function(line) {
+      return line.replace("_____", "...");
+    })
+    .join(" ");
+
+  const utterance = new SpeechSynthesisUtterance(text);
+
+  utterance.lang = "ms-MY";
+  utterance.rate = 0.82;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  const malayVoice = getMalayVoice();
+
+  if (malayVoice) {
+    utterance.voice = malayVoice;
+  }
+
+  utterance.onstart = function() {
+    isSpeaking = true;
+
+    const button = document.getElementById("listenBtn");
+
+    if (button) {
+      button.textContent = "⏹️ Hentikan Audio";
+    }
+  };
+
+  utterance.onend = function() {
+    isSpeaking = false;
+
+    const button = document.getElementById("listenBtn");
+
+    if (button) {
+      button.textContent = "🔊 Dengar Pantun";
+    }
+  };
+
+  utterance.onerror = function() {
+    isSpeaking = false;
+
+    const button = document.getElementById("listenBtn");
+
+    if (button) {
+      button.textContent = "🔊 Dengar Pantun";
+    }
+  };
+
+  window.speechSynthesis.speak(utterance);
+}
+
+// ==========================================
+// 9. HASILKAN KUMBANG KAWAII
+// ==========================================
 
 function createBugCard(choice, index) {
   const card = document.createElement("button");
@@ -880,6 +1397,7 @@ function createBugCard(choice, index) {
         stroke-width="4"
         stroke-linecap="round"
       />
+
       <path
         d="M71 29 Q80 13 86 17"
         fill="none"
@@ -887,8 +1405,20 @@ function createBugCard(choice, index) {
         stroke-width="4"
         stroke-linecap="round"
       />
-      <circle cx="34" cy="17" r="5" fill="#ffb8c8"/>
-      <circle cx="86" cy="17" r="5" fill="#ffb8c8"/>
+
+      <circle
+        cx="34"
+        cy="17"
+        r="5"
+        fill="#ffb8c8"
+      />
+
+      <circle
+        cx="86"
+        cy="17"
+        r="5"
+        fill="#ffb8c8"
+      />
 
       <!-- Kaki -->
       <path
@@ -911,8 +1441,20 @@ function createBugCard(choice, index) {
           stroke="#7c4b44"
           stroke-width="3"
         />
-        <circle cx="29" cy="51" r="5" fill="#fff5f5"/>
-        <circle cx="44" cy="67" r="5" fill="#fff5f5"/>
+
+        <circle
+          cx="29"
+          cy="51"
+          r="5"
+          fill="#fff5f5"
+        />
+
+        <circle
+          cx="44"
+          cy="67"
+          r="5"
+          fill="#fff5f5"
+        />
       </g>
 
       <!-- Sayap kanan -->
@@ -926,8 +1468,20 @@ function createBugCard(choice, index) {
           stroke="#7c4b44"
           stroke-width="3"
         />
-        <circle cx="91" cy="51" r="5" fill="#fff5f5"/>
-        <circle cx="76" cy="67" r="5" fill="#fff5f5"/>
+
+        <circle
+          cx="91"
+          cy="51"
+          r="5"
+          fill="#fff5f5"
+        />
+
+        <circle
+          cx="76"
+          cy="67"
+          r="5"
+          fill="#fff5f5"
+        />
       </g>
 
       <!-- Badan -->
@@ -953,14 +1507,52 @@ function createBugCard(choice, index) {
       />
 
       <!-- Mata kawaii -->
-      <ellipse cx="48" cy="39" rx="7" ry="10" fill="#3b302c"/>
-      <ellipse cx="72" cy="39" rx="7" ry="10" fill="#3b302c"/>
-      <circle cx="50" cy="35" r="3" fill="white"/>
-      <circle cx="74" cy="35" r="3" fill="white"/>
+      <ellipse
+        cx="48"
+        cy="39"
+        rx="7"
+        ry="10"
+        fill="#3b302c"
+      />
+
+      <ellipse
+        cx="72"
+        cy="39"
+        rx="7"
+        ry="10"
+        fill="#3b302c"
+      />
+
+      <circle
+        cx="50"
+        cy="35"
+        r="3"
+        fill="white"
+      />
+
+      <circle
+        cx="74"
+        cy="35"
+        r="3"
+        fill="white"
+      />
 
       <!-- Pipi merah -->
-      <ellipse cx="37" cy="51" rx="8" ry="5" fill="#ff9eab"/>
-      <ellipse cx="83" cy="51" rx="8" ry="5" fill="#ff9eab"/>
+      <ellipse
+        cx="37"
+        cy="51"
+        rx="8"
+        ry="5"
+        fill="#ff9eab"
+      />
+
+      <ellipse
+        cx="83"
+        cy="51"
+        rx="8"
+        ry="5"
+        fill="#ff9eab"
+      />
 
       <!-- Senyuman -->
       <path
@@ -972,19 +1564,31 @@ function createBugCard(choice, index) {
       />
 
       <!-- Kilauan -->
-      <circle cx="44" cy="24" r="4" fill="white" opacity=".6"/>
+      <circle
+        cx="44"
+        cy="24"
+        r="4"
+        fill="white"
+        opacity=".6"
+      />
     </svg>
 
-    <span class="bug-label">${escapeHTML(choice)}</span>
+    <span class="bug-label">
+      ${escapeHTML(choice)}
+    </span>
   `;
 
   card.addEventListener("pointerdown", function(event) {
-    if (!started || answered || dragMode) return;
+    if (!started || answered || dragMode) {
+      return;
+    }
 
     if (
       event.pointerType === "mouse" &&
       event.button !== 0
-    ) return;
+    ) {
+      return;
+    }
 
     event.preventDefault();
 
@@ -1009,9 +1613,9 @@ function createBugCard(choice, index) {
   return card;
 }
 
-// =======================================
-// 8. KEDUDUKAN AWAL KUMBANG
-// =======================================
+// ==========================================
+// 10. KEDUDUKAN AWAL KUMBANG
+// ==========================================
 
 function initializeBugPositions() {
   const width = cardsEl.clientWidth;
@@ -1058,9 +1662,9 @@ function findBug(card) {
   });
 }
 
-// =======================================
-// 9. KUMBANG TERBANG BEBAS
-// =======================================
+// ==========================================
+// 11. KUMBANG TERBANG BEBAS
+// ==========================================
 
 function animateBugs(timestamp) {
   if (!lastAnimationTime) {
@@ -1074,12 +1678,20 @@ function animateBugs(timestamp) {
 
   lastAnimationTime = timestamp;
 
-  if (started && !answered) {
+  if (
+    started &&
+    !answered &&
+    !window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches
+  ) {
     const areaWidth = cardsEl.clientWidth;
     const areaHeight = cardsEl.clientHeight;
 
     flyingBugs.forEach(function(bug) {
-      if (bug.paused) return;
+      if (bug.paused) {
+        return;
+      }
 
       const maxX = Math.max(
         0,
@@ -1096,7 +1708,10 @@ function animateBugs(timestamp) {
       bug.vx += Math.sin(bug.phase) * dt * 7;
       bug.vy += Math.cos(bug.phase * 1.3) * dt * 7;
 
-      const speed = Math.hypot(bug.vx, bug.vy);
+      const speed = Math.hypot(
+        bug.vx,
+        bug.vy
+      );
 
       if (speed > 40) {
         bug.vx = bug.vx / speed * 40;
@@ -1131,12 +1746,14 @@ function animateBugs(timestamp) {
 
 requestAnimationFrame(animateBugs);
 
-// =======================================
-// 10. TANGKAP KUMBANG SEBENAR
-// =======================================
+// ==========================================
+// 12. TANGKAP KUMBANG SEBENAR
+// ==========================================
 
 function beginDragging(card, x, y, mode) {
-  if (!card || !started || answered) return false;
+  if (!card || !started || answered) {
+    return false;
+  }
 
   stopDragging();
 
@@ -1144,31 +1761,37 @@ function beginDragging(card, x, y, mode) {
   dragMode = mode;
 
   const bug = findBug(card);
-  if (bug) bug.paused = true;
+
+  if (bug) {
+    bug.paused = true;
+  }
 
   const gameRect = gameEl.getBoundingClientRect();
   const cardRect = card.getBoundingClientRect();
 
-  // Simpan jarak antara titik tangkapan
-  // dengan sudut kiri atas kumbang.
   dragOffsetX =
     x - (cardRect.left - gameRect.left);
 
   dragOffsetY =
     y - (cardRect.top - gameRect.top);
 
-  // Pindahkan elemen kumbang yang sama
-  // ke lapisan permainan supaya boleh
-  // dibawa ke petak jawapan.
-  const left = cardRect.left - gameRect.left;
-  const top = cardRect.top - gameRect.top;
+  const left =
+    cardRect.left - gameRect.left;
 
+  const top =
+    cardRect.top - gameRect.top;
+
+  // Elemen kumbang sebenar dipindahkan
+  // ke lapisan permainan semasa ditangkap.
   gameEl.appendChild(card);
 
   card.style.left = left + "px";
   card.style.top = top + "px";
 
-  card.classList.add("selected", "captured");
+  card.classList.add(
+    "selected",
+    "captured"
+  );
 
   moveDragging(x, y);
 
@@ -1176,14 +1799,15 @@ function beginDragging(card, x, y, mode) {
 }
 
 function moveDragging(x, y) {
-  if (!selectedCard) return;
+  if (!selectedCard) {
+    return;
+  }
 
-  // Seluruh kumbang ikut tangan/tetikus.
-  const left = x - dragOffsetX;
-  const top = y - dragOffsetY;
+  selectedCard.style.left =
+    (x - dragOffsetX) + "px";
 
-  selectedCard.style.left = left + "px";
-  selectedCard.style.top = top + "px";
+  selectedCard.style.top =
+    (y - dragOffsetY) + "px";
 
   targetEl.classList.toggle(
     "hover",
@@ -1192,7 +1816,9 @@ function moveDragging(x, y) {
 }
 
 function finishDragging(x, y, allowClick) {
-  if (!selectedCard) return;
+  if (!selectedCard) {
+    return;
+  }
 
   const choice = selectedCard.dataset.answer;
   const inside = isInsideTarget(x, y);
@@ -1223,8 +1849,6 @@ function stopDragging() {
       "captured"
     );
 
-    // Kembalikan kumbang ke kawasan
-    // terbang jika dilepaskan.
     cardsEl.appendChild(card);
 
     if (bug) {
@@ -1273,13 +1897,18 @@ function getCardAt(x, y) {
   return null;
 }
 
-// =======================================
-// 11. TETIKUS DAN SENTUHAN
-// =======================================
+// ==========================================
+// 13. TETIKUS DAN SENTUHAN
+// ==========================================
 
 window.addEventListener("pointermove", function(event) {
-  if (dragMode !== "pointer") return;
-  if (event.pointerId !== activePointerId) return;
+  if (dragMode !== "pointer") {
+    return;
+  }
+
+  if (event.pointerId !== activePointerId) {
+    return;
+  }
 
   if (
     Math.hypot(
@@ -1299,8 +1928,13 @@ window.addEventListener("pointermove", function(event) {
 });
 
 window.addEventListener("pointerup", function(event) {
-  if (dragMode !== "pointer") return;
-  if (event.pointerId !== activePointerId) return;
+  if (dragMode !== "pointer") {
+    return;
+  }
+
+  if (event.pointerId !== activePointerId) {
+    return;
+  }
 
   const rect = gameEl.getBoundingClientRect();
 
@@ -1320,9 +1954,9 @@ window.addEventListener("pointercancel", function(event) {
   }
 });
 
-// =======================================
-// 12. ANIMASI BINTANG
-// =======================================
+// ==========================================
+// 14. ANIMASI BINTANG
+// ==========================================
 
 function showStars() {
   starsLayer.innerHTML = "";
@@ -1349,6 +1983,7 @@ function showStars() {
 
     star.className = "star";
     star.textContent = symbol;
+
     star.style.left = centerX + "px";
     star.style.top = centerY + "px";
 
@@ -1376,12 +2011,14 @@ function showStars() {
   });
 }
 
-// =======================================
-// 13. SEMAK JAWAPAN
-// =======================================
+// ==========================================
+// 15. SEMAK JAWAPAN
+// ==========================================
 
 function checkAnswer(choice) {
-  if (!started || answered) return;
+  if (!started || answered) {
+    return;
+  }
 
   clearTimeout(feedbackTimer);
 
@@ -1396,8 +2033,11 @@ function checkAnswer(choice) {
     answered = true;
     score++;
 
+    stopPantunAudio();
+
     messageEl.textContent =
       "🌟 Syabas! Jawapan anda betul!";
+
     messageEl.style.color = "#148448";
 
     targetEl.textContent = "✅ " + choice;
@@ -1426,6 +2066,7 @@ function checkAnswer(choice) {
   } else {
     messageEl.textContent =
       "❌ Jawapan belum tepat. Baca pantun dan cuba lagi!";
+
     messageEl.style.color = "#c73530";
 
     targetEl.textContent = "❌ Cuba Lagi!";
@@ -1438,6 +2079,7 @@ function checkAnswer(choice) {
     feedbackTimer = setTimeout(function() {
       if (!answered && started) {
         targetEl.classList.remove("wrong");
+
         targetEl.textContent =
           "🎯 Letakkan jawapan di sini";
       }
@@ -1445,27 +2087,116 @@ function checkAnswer(choice) {
   }
 }
 
-// =======================================
-// 14. TAMAT PERMAINAN
-// =======================================
+// ==========================================
+// 16. KONFETI
+// ==========================================
+
+function showConfetti() {
+  confettiLayer.innerHTML = "";
+
+  const colors = [
+    "#ffcc44",
+    "#ff789a",
+    "#6db8ff",
+    "#8bd96b",
+    "#c68bff",
+    "#ff9554"
+  ];
+
+  for (let i = 0; i < 95; i++) {
+    const piece = document.createElement("span");
+
+    piece.className = "confetti";
+
+    piece.style.left =
+      (Math.random() * 100) + "%";
+
+    piece.style.background =
+      colors[i % colors.length];
+
+    piece.style.setProperty(
+      "--duration",
+      (2.5 + Math.random() * 2) + "s"
+    );
+
+    piece.style.setProperty(
+      "--delay",
+      (Math.random() * 1.6) + "s"
+    );
+
+    piece.style.setProperty(
+      "--drift",
+      (Math.random() * 180 - 90) + "px"
+    );
+
+    piece.style.setProperty(
+      "--rotation",
+      (Math.random() * 1000) + "deg"
+    );
+
+    confettiLayer.appendChild(piece);
+  }
+
+  confettiTimer = setTimeout(function() {
+    confettiLayer.innerHTML = "";
+  }, 6500);
+}
+
+// ==========================================
+// 17. TAMAT PERMAINAN DAN LENCANA
+// ==========================================
 
 function finishGame() {
   stopDragging();
+  stopPantunAudio();
 
   started = false;
   answered = true;
   flyingBugs = [];
 
   gameEl.classList.add("finished");
+  rhymeBox.hidden = true;
 
-  questionEl.innerHTML =
-    '<div class="finish-title">🎉 TAHNIAH! 🎉</div>' +
-    '<div class="finish-text">' +
-    'Anda berjaya menyelesaikan tugasan.<br>' +
-    'Sila ke zon seterusnya. 🌿' +
-    '</div>' +
-    '<button class="action" id="playAgainBtn" ' +
-    'type="button">🔄 Main Semula</button>';
+  questionEl.innerHTML = `
+    <div class="finish-title">
+      🎉 TAHNIAH! 🎉
+    </div>
+
+    <div>
+      Anda berjaya melengkapkan
+      semua 5 misi!
+    </div>
+
+    <div class="medal">
+      <div class="medal-ribbon left"></div>
+      <div class="medal-ribbon right"></div>
+
+      <div class="medal-circle">
+        ★
+      </div>
+    </div>
+
+    <div class="medal-name">
+      🏅 WIRA RIMA RIMBA 🏅
+    </div>
+
+    <div style="margin-top:10px">
+      Hebat! Anda telah menguasai
+      cabaran pantun di Rima Rimba!
+    </div>
+
+    <div style="margin-top:8px">
+      🌿 Sila ke zon seterusnya.
+    </div>
+
+    <button
+      class="action"
+      id="playAgainBtn"
+      type="button"
+    >
+      🔄 Main Semula
+    </button>
+  `;
 
   document.getElementById("playAgainBtn")
     .addEventListener("click", startGame);
@@ -1475,15 +2206,30 @@ function finishGame() {
 
   messageEl.textContent =
     "🏆 Syabas! Semua misi berjaya diselesaikan.";
+
   messageEl.style.color = "#148448";
+
+  showConfetti();
+
+  playSound(660);
+
+  setTimeout(function() {
+    playSound(880);
+  }, 160);
+
+  setTimeout(function() {
+    playSound(1100);
+  }, 320);
 }
 
-// =======================================
-// 15. KAMERA AR
-// =======================================
+// ==========================================
+// 18. KAMERA AR
+// ==========================================
 
 async function startCamera() {
-  if (tracking || cameraStream) return;
+  if (tracking || cameraStream) {
+    return;
+  }
 
   if (!navigator.mediaDevices?.getUserMedia) {
     statusEl.textContent =
@@ -1562,21 +2308,26 @@ async function startCamera() {
 
 window.addEventListener("load", startCamera);
 
-// =======================================
-// 16. PROSES KAMERA
-// =======================================
+// ==========================================
+// 19. PROSES KAMERA
+// ==========================================
 
 async function trackFrame() {
-  if (!tracking) return;
+  if (!tracking) {
+    return;
+  }
 
   if (!processing && video.readyState >= 2) {
     processing = true;
 
     try {
-      await hands.send({ image: video });
+      await hands.send({
+        image: video
+      });
     } catch (error) {
       statusEl.textContent =
         "Ralat hand tracking: " + error.message;
+
       tracking = false;
     } finally {
       processing = false;
@@ -1588,9 +2339,9 @@ async function trackFrame() {
   }
 }
 
-// =======================================
-// 17. KESAN TANGAN DAN CUBITAN
-// =======================================
+// ==========================================
+// 20. KESAN TANGAN DAN CUBITAN
+// ==========================================
 
 function onHandResults(results) {
   const landmarks = results.multiHandLandmarks?.[0];
@@ -1676,18 +2427,20 @@ function onHandResults(results) {
 
   if (!isPinching && previousPinch) {
     if (dragMode === "hand") {
-      finishDragging(handX, handY, false);
+      finishDragging(
+        handX,
+        handY,
+        false
+      );
     }
   }
 
   previousPinch = isPinching;
 }
 
-// =======================================
-// 18. BUNYI
-// =======================================
-
-let audioContext = null;
+// ==========================================
+// 21. BUNYI MAKLUM BALAS
+// ==========================================
 
 function getAudioContext() {
   if (!audioContext) {
@@ -1735,19 +2488,25 @@ function playSound(
     oscillator.stop(now + duration);
 
   } catch (error) {
-    console.log("Audio tidak tersedia:", error);
+    console.log(
+      "Audio tidak tersedia:",
+      error
+    );
   }
 }
 
-// =======================================
-// 19. TUTUP KAMERA
-// =======================================
+// ==========================================
+// 22. TUTUP KAMERA DAN AUDIO
+// ==========================================
 
 window.addEventListener("pagehide", function() {
   tracking = false;
 
   clearTimeout(nextQuestionTimer);
   clearTimeout(feedbackTimer);
+  clearTimeout(confettiTimer);
+
+  stopPantunAudio();
 
   if (cameraStream) {
     cameraStream.getTracks().forEach(function(track) {
