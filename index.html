@@ -5,13 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zon 2: Rima Rimba AR</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -51,7 +48,7 @@ header h1 {
 
 .game {
   position: relative;
-  height: 570px;
+  height: 610px;
   overflow: hidden;
   border: 7px solid white;
   border-radius: 25px;
@@ -82,15 +79,8 @@ header h1 {
   pointer-events: none;
 }
 
-.cloud.one {
-  top: 10px;
-  left: 5%;
-}
-
-.cloud.two {
-  top: 40px;
-  right: 18%;
-}
+.cloud.one { top: 10px; left: 5%; }
+.cloud.two { top: 40px; right: 18%; }
 
 .tree {
   position: absolute;
@@ -99,13 +89,8 @@ header h1 {
   pointer-events: none;
 }
 
-.tree.left {
-  left: -15px;
-}
-
-.tree.right {
-  right: -15px;
-}
+.tree.left { left: -15px; }
+.tree.right { right: -15px; }
 
 .grass {
   position: absolute;
@@ -125,22 +110,12 @@ header h1 {
   animation: bounce 2.5s ease-in-out infinite;
 }
 
-.animal.left {
-  left: 4%;
-}
-
-.animal.right {
-  right: 5%;
-  animation-delay: 1s;
-}
+.animal.left { left: 4%; }
+.animal.right { right: 5%; animation-delay: 1s; }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 #camera {
@@ -155,9 +130,7 @@ header h1 {
   pointer-events: none;
 }
 
-#camera.active {
-  opacity: 0.5;
-}
+#camera.active { opacity: .5; }
 
 .overlay {
   position: absolute;
@@ -168,38 +141,39 @@ header h1 {
 
 .question {
   position: absolute;
-  top: 15px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   width: min(94%, 800px);
   background: #fffdf0f5;
   border: 4px solid #f7d36c;
   border-radius: 20px;
-  padding: 19px 15px;
+  padding: 16px 12px;
   text-align: center;
   font-size: clamp(19px, 2.6vw, 25px);
   font-weight: bold;
-  line-height: 1.6;
+  line-height: 1.55;
   box-shadow: 0 5px 12px #0002;
+  z-index: 3;
 }
 
 .question-title {
   color: #16854a;
   font-size: 19px;
-  margin-bottom: 7px;
+  margin-bottom: 6px;
 }
 
 .answer-zone {
   position: absolute;
-  top: 63%;
+  top: 59%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: min(65%, 340px);
-  min-height: 90px;
+  min-height: 85px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15px;
+  padding: 13px;
   text-align: center;
   background: #197647ed;
   color: white;
@@ -208,17 +182,17 @@ header h1 {
   font-size: 19px;
   font-weight: bold;
   box-shadow: 0 5px 12px #0003;
+  z-index: 4;
 }
 
 .answer-zone.hover {
   background: #ffbd48;
   color: #523a12;
-  transform: translate(-50%, -50%) scale(1.05);
 }
 
 .answer-zone.wrong {
   background: #d94b45;
-  animation: shake 0.35s ease-in-out;
+  animation: shake .35s ease-in-out;
 }
 
 .answer-zone.correct {
@@ -227,16 +201,24 @@ header h1 {
 }
 
 @keyframes shake {
-  0%, 100% {
-    transform: translate(-50%, -50%) translateX(0);
-  }
-  25% {
-    transform: translate(-50%, -50%) translateX(-9px);
-  }
-  75% {
-    transform: translate(-50%, -50%) translateX(9px);
-  }
+  0%,100% { margin-left: 0; }
+  25% { margin-left: -9px; }
+  75% { margin-left: 9px; }
 }
+
+.action {
+  background: #268e54;
+  color: white;
+  border: none;
+  border-radius: 13px;
+  padding: 13px 18px;
+  margin: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.action:hover { background: #1b6f42; }
 
 #startBtn {
   pointer-events: auto;
@@ -246,53 +228,146 @@ header h1 {
   padding: 16px 26px;
 }
 
-#startBtn:hover {
-  background: #ffe995;
-}
+#startBtn:hover { background: #ffe995; }
 
+/* KAWASAN KUMBANG TERBANG */
 .cards {
   position: absolute;
-  bottom: 23px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 0 12px;
-  pointer-events: auto;
+  left: 3%;
+  right: 3%;
+  bottom: 12px;
+  height: 180px;
+  z-index: 6;
+  pointer-events: none;
 }
 
-.card {
-  background: #ffdf70;
-  border: 4px solid white;
-  border-radius: 17px;
-  padding: 13px 20px;
-  color: #604018;
-  font: bold 19px "Trebuchet MS", Arial, sans-serif;
-  box-shadow: 0 5px 0 #d7a63a;
+.bug-card {
+  position: absolute;
+  width: clamp(94px, 15vw, 150px);
+  height: 105px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   cursor: grab;
+  touch-action: none;
   user-select: none;
   -webkit-user-select: none;
-  touch-action: none;
   pointer-events: auto;
+  will-change: left, top;
+  filter: drop-shadow(0 5px 4px #0004);
 }
 
-.card.selected {
-  background: #ff9b57;
-  border-color: #fff0aa;
+.bug-card:focus-visible {
+  outline: 4px solid #fff;
+  border-radius: 20px;
 }
 
-.card:disabled {
-  opacity: 0.65;
-  cursor: default;
+.bug-card.selected {
+  filter: drop-shadow(0 0 12px #ffe66a);
+  cursor: grabbing;
+}
+
+.bug-card:disabled {
+  opacity: .65;
+}
+
+.bug-body {
+  position: absolute;
+  width: 72px;
+  height: 65px;
+  left: 50%;
+  top: 5px;
+  transform: translateX(-50%);
+  background: #62452b;
+  border-radius: 45% 45% 50% 50%;
+  border: 3px solid #49301b;
+}
+
+.bug-head {
+  position: absolute;
+  width: 38px;
+  height: 33px;
+  background: #62452b;
+  border-radius: 50%;
+  left: 50%;
+  top: -11px;
+  transform: translateX(-50%);
+}
+
+.bug-eye {
+  position: absolute;
+  top: 9px;
+  width: 7px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.bug-eye.left { left: 8px; }
+.bug-eye.right { right: 8px; }
+
+.bug-wing {
+  position: absolute;
+  top: 17px;
+  width: 31px;
+  height: 39px;
+  border: 2px solid #54301f;
+  background: var(--bug-color, #f26b54);
+  border-radius: 50% 50% 40% 40%;
+  transform-origin: top center;
+  animation: flap .38s ease-in-out infinite alternate;
+}
+
+.bug-wing.left {
+  left: 3px;
+  transform: rotate(-15deg);
+}
+
+.bug-wing.right {
+  right: 3px;
+  transform: rotate(15deg);
+  animation-delay: -.19s;
+}
+
+.bug-spot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #503126;
+  border-radius: 50%;
+  top: 13px;
+  left: 10px;
+}
+
+@keyframes flap {
+  from { scale: 1 1; }
+  to { scale: .78 1; }
+}
+
+.bug-label {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff1ad;
+  color: #503819;
+  border: 3px solid white;
+  border-radius: 13px;
+  padding: 7px 8px;
+  min-width: 90%;
+  max-width: 100%;
+  text-align: center;
+  font-size: clamp(13px, 1.6vw, 17px);
+  font-weight: bold;
+  overflow-wrap: anywhere;
+  box-shadow: 0 3px 0 #cda541;
 }
 
 .drag-ghost {
   position: absolute;
   z-index: 90;
-  padding: 13px 20px;
-  background: #ff9b57;
+  padding: 12px 18px;
+  background: #ffdf70;
   border: 4px solid white;
   border-radius: 17px;
   color: #603c17;
@@ -320,10 +395,8 @@ header h1 {
 
 .cursor.pinching {
   background: #ff594c;
-  transform: translate(-50%, -50%) scale(0.8);
+  transform: translate(-50%, -50%) scale(.8);
 }
-
-/* Animasi bintang */
 
 .stars-layer {
   position: absolute;
@@ -342,11 +415,9 @@ header h1 {
 @keyframes starBurst {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.3);
+    transform: translate(-50%, -50%) scale(.3);
   }
-  20% {
-    opacity: 1;
-  }
+  20% { opacity: 1; }
   100% {
     opacity: 0;
     transform:
@@ -354,8 +425,7 @@ header h1 {
         calc(-50% + var(--dx)),
         calc(-50% + var(--dy))
       )
-      rotate(200deg)
-      scale(1.4);
+      rotate(200deg) scale(1.4);
   }
 }
 
@@ -372,22 +442,6 @@ header h1 {
   color: #21804b;
   font-size: 20px;
   font-weight: bold;
-}
-
-.action {
-  background: #268e54;
-  color: white;
-  border: none;
-  border-radius: 13px;
-  padding: 13px 18px;
-  margin: 5px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.action:hover {
-  background: #1b6f42;
 }
 
 #message {
@@ -411,21 +465,17 @@ header h1 {
   line-height: 1.7;
 }
 
-.instructions[hidden] {
-  display: none;
-}
+.instructions[hidden] { display: none; }
 
 .help-button {
   background: #f5b638;
   color: #483814;
 }
 
-.help-button:hover {
-  background: #e6a523;
-}
+.help-button:hover { background: #e6a523; }
 
 .game.finished .question {
-  top: 32%;
+  top: 31%;
   width: min(90%, 650px);
   padding: 28px 18px;
   border: 5px solid #ffd568;
@@ -445,48 +495,43 @@ header h1 {
   margin-bottom: 10px;
 }
 
-.finish-text {
-  color: #24513b;
-}
-
 .game.finished .answer-zone,
 .game.finished .cards {
   display: none;
 }
 
 @media (max-width: 600px) {
-  .game {
-    height: 620px;
-  }
-
-  .tree {
-    font-size: 65px;
-  }
-
-  .animal {
-    font-size: 42px;
-  }
+  .game { height: 650px; }
+  .tree { font-size: 65px; }
+  .animal { font-size: 42px; }
 
   .question {
     top: 10px;
     padding: 12px 8px;
     font-size: clamp(17px, 4vw, 21px);
-    line-height: 1.55;
+    line-height: 1.5;
   }
 
   .answer-zone {
-    top: 65%;
+    top: 58%;
     width: 76%;
   }
 
   .cards {
-    bottom: 16px;
-    gap: 7px;
+    height: 190px;
+    bottom: 10px;
   }
 
-  .card {
-    padding: 11px;
-    font-size: 15px;
+  .bug-card {
+    width: 100px;
+    height: 105px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animal,
+  .bug-wing {
+    animation: none;
   }
 }
 </style>
@@ -499,13 +544,11 @@ header h1 {
 </header>
 
 <div class="container">
-
   <div class="intro">
     🌟 Misi Kumbang: Lengkapkan pantun dengan perkataan yang betul!
   </div>
 
   <div class="game" id="game">
-
     <div class="sun"></div>
     <div class="cloud one">☁️</div>
     <div class="cloud two">☁️</div>
@@ -518,7 +561,6 @@ header h1 {
     <video id="camera" autoplay muted playsinline></video>
 
     <div class="overlay">
-
       <div class="question" id="question">
         🌿 Bersedia untuk melengkapkan pantun?
         Tekan butang Mula Bermain!
@@ -533,15 +575,11 @@ header h1 {
       <div class="cards" id="cards"></div>
       <div class="cursor" id="cursor"></div>
       <div class="stars-layer" id="starsLayer"></div>
-
     </div>
   </div>
 
   <div class="panel">
-
-    <div class="progress" id="progress">
-      Misi 0 / 5
-    </div>
+    <div class="progress" id="progress">Misi 0 / 5</div>
 
     <p id="message" aria-live="polite"></p>
 
@@ -558,7 +596,6 @@ header h1 {
     <p id="status" aria-live="polite">
       📷 Kamera AR sedang disediakan secara automatik...
     </p>
-
   </div>
 
   <div class="instructions" id="instructions" hidden>
@@ -566,33 +603,32 @@ header h1 {
     <p>
       1. Tekan butang <strong>Mula Bermain</strong>.<br>
       2. Baca pantun dengan teliti.<br>
-      3. Pilih perkataan yang sesuai untuk melengkapkan pantun.<br>
-      4. Seret kad jawapan ke dalam petak hijau.<br>
+      3. Cari kumbang yang membawa jawapan yang betul.<br>
+      4. Tangkap kumbang dan bawa ke petak hijau.<br>
       5. Lengkapkan kelima-lima misi.
     </p>
 
-    <strong>🖐️ Menggunakan Kamera AR:</strong>
+    <strong>🖐️ Kamera AR:</strong>
     <p>
-      Letakkan bulatan kuning pada kad jawapan.
-      Cubit ibu jari dan jari telunjuk untuk mengambil kad.
-      Gerakkan kad ke petak hijau dan lepaskan cubitan.
+      Halakan jari telunjuk pada kumbang.
+      Cubit ibu jari dan jari telunjuk untuk menangkapnya.
+      Gerakkan tangan ke petak hijau dan lepaskan cubitan.
     </p>
 
-    <strong>🖱️ Menggunakan Tetikus atau Sentuhan:</strong>
+    <strong>🖱️ Tetikus atau Sentuhan:</strong>
     <p>
-      Klik dan tahan kad, seret ke petak hijau,
+      Klik dan tahan kumbang, seret ke petak hijau,
       kemudian lepaskan.
-      Murid juga boleh klik kad untuk memilih jawapan.
+      Murid juga boleh klik kumbang untuk memilih jawapan.
     </p>
   </div>
-
 </div>
 
 <script>
 "use strict";
 
 // =======================================
-// 1. SOALAN PANTUN
+// 1. SOALAN PANTUN ASAL
 // =======================================
 
 const questions = [
@@ -649,7 +685,7 @@ const questions = [
 ];
 
 // =======================================
-// 2. ELEMEN PERMAINAN
+// 2. ELEMEN
 // =======================================
 
 const gameEl = document.getElementById("game");
@@ -658,18 +694,16 @@ const questionEl = document.getElementById("question");
 const cardsEl = document.getElementById("cards");
 const targetEl = document.getElementById("target");
 const cursorEl = document.getElementById("cursor");
-
 const progressEl = document.getElementById("progress");
 const messageEl = document.getElementById("message");
 const statusEl = document.getElementById("status");
-
 const startBtn = document.getElementById("startBtn");
 const helpBtn = document.getElementById("helpBtn");
 const instructionsEl = document.getElementById("instructions");
 const starsLayer = document.getElementById("starsLayer");
 
 // =======================================
-// 3. PEMBOLEH UBAH
+// 3. KEADAAN PERMAINAN
 // =======================================
 
 let currentQuestion = 0;
@@ -681,7 +715,6 @@ let selectedCard = null;
 let ghost = null;
 let dragMode = null;
 let activePointerId = null;
-
 let pointerStartX = 0;
 let pointerStartY = 0;
 let pointerMoved = false;
@@ -691,53 +724,61 @@ let cameraStream = null;
 let tracking = false;
 let processing = false;
 let previousPinch = false;
-
 let handX = 0;
 let handY = 0;
+
 let nextQuestionTimer = null;
 let feedbackTimer = null;
 
+// Kumbang bergerak bebas dalam kawasan bawah.
+let flyingBugs = [];
+let lastAnimationTime = 0;
+let lastFrame = 0;
+
+const BUG_COLORS = [
+  "#f26b54",
+  "#72bff0",
+  "#94d86d"
+];
+
 // =======================================
-// 4. BUTANG CARA BERMAIN
+// 4. CARA BERMAIN
 // =======================================
 
 helpBtn.addEventListener("click", function() {
-  const isHidden = instructionsEl.hidden;
-
-  instructionsEl.hidden = !isHidden;
+  const opening = instructionsEl.hidden;
+  instructionsEl.hidden = !opening;
 
   helpBtn.setAttribute(
     "aria-expanded",
-    String(isHidden)
+    String(opening)
   );
 
-  helpBtn.textContent = isHidden
+  helpBtn.textContent = opening
     ? "✖ Tutup Cara Bermain"
     : "📖 Cara Bermain";
 });
 
 // =======================================
-// 5. RAWAKKAN KEDUDUKAN JAWAPAN
+// 5. RAWAKKAN JAWAPAN
 // =======================================
 
 function shuffleChoices(choices) {
-  const shuffled = [...choices];
+  const result = [...choices];
 
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(
-      Math.random() * (i + 1)
-    );
-
-    [shuffled[i], shuffled[j]] =
-      [shuffled[j], shuffled[i]];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
   }
 
-  return shuffled;
+  return result;
 }
 
 // =======================================
 // 6. MULA PERMAINAN
 // =======================================
+
+startBtn.addEventListener("click", startGame);
 
 function startGame() {
   clearTimeout(nextQuestionTimer);
@@ -754,27 +795,23 @@ function startGame() {
   showQuestion();
 }
 
-startBtn.addEventListener("click", startGame);
+function escapeHTML(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
 
 function showQuestion() {
   stopDragging();
-
   clearTimeout(feedbackTimer);
 
   answered = false;
   previousPinch = false;
 
-  gameEl.classList.remove("finished");
-
-  targetEl.classList.remove(
-    "wrong",
-    "correct",
-    "hover"
-  );
-
+  targetEl.classList.remove("wrong", "correct", "hover");
+  targetEl.textContent = "🎯 Letakkan jawapan di sini";
   messageEl.textContent = "";
-  targetEl.textContent =
-    "🎯 Letakkan jawapan di sini";
 
   const q = questions[currentQuestion];
 
@@ -783,80 +820,229 @@ function showQuestion() {
     " / " + questions.length;
 
   questionEl.innerHTML =
-    '<div class="question-title">' +
-    '🪲 Lengkapkan Pantun!' +
-    '</div>' +
+    '<div class="question-title">🪲 Lengkapkan Pantun!</div>' +
     q.lines.map(escapeHTML).join("<br>");
 
   cardsEl.innerHTML = "";
+  flyingBugs = [];
 
-  // Jawapan diacak setiap kali soalan muncul.
-  const randomizedChoices =
-    shuffleChoices(q.choices);
+  const choices = shuffleChoices(q.choices);
 
-  randomizedChoices.forEach(function(choice) {
-    const card = document.createElement("button");
-
-    card.type = "button";
-    card.className = "card";
-    card.textContent = choice;
-    card.dataset.answer = choice;
-
-    card.addEventListener(
-      "pointerdown",
-      function(event) {
-        if (!started || answered || dragMode) {
-          return;
-        }
-
-        if (
-          event.pointerType === "mouse" &&
-          event.button !== 0
-        ) {
-          return;
-        }
-
-        event.preventDefault();
-
-        const rect =
-          gameEl.getBoundingClientRect();
-
-        pointerStartX = event.clientX;
-        pointerStartY = event.clientY;
-        pointerMoved = false;
-
-        const success = beginDragging(
-          card,
-          event.clientX - rect.left,
-          event.clientY - rect.top,
-          "pointer"
-        );
-
-        if (success) {
-          activePointerId = event.pointerId;
-        }
-      }
-    );
-
+  choices.forEach(function(choice, index) {
+    const card = createBugCard(choice, index);
     cardsEl.appendChild(card);
+
+    flyingBugs.push({
+      element: card,
+      x: 0,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      phase: Math.random() * Math.PI * 2,
+      paused: false
+    });
+  });
+
+  // Tunggu susun atur kad siap sebelum menetapkan lokasi.
+  requestAnimationFrame(function() {
+    initializeBugPositions();
   });
 }
 
-function escapeHTML(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
+// =======================================
+// 7. REKA BENTUK KUMBANG
+// =======================================
+
+function createBugCard(choice, index) {
+  const card = document.createElement("button");
+
+  card.type = "button";
+  card.className = "bug-card";
+  card.dataset.answer = choice;
+  card.setAttribute(
+    "aria-label",
+    "Kumbang membawa perkataan " + choice
+  );
+
+  card.style.setProperty(
+    "--bug-color",
+    BUG_COLORS[index % BUG_COLORS.length]
+  );
+
+  card.innerHTML =
+    '<span class="bug-body">' +
+      '<span class="bug-head">' +
+        '<span class="bug-eye left"></span>' +
+        '<span class="bug-eye right"></span>' +
+      '</span>' +
+      '<span class="bug-wing left">' +
+        '<span class="bug-spot"></span>' +
+      '</span>' +
+      '<span class="bug-wing right">' +
+        '<span class="bug-spot"></span>' +
+      '</span>' +
+    '</span>' +
+    '<span class="bug-label">' +
+      escapeHTML(choice) +
+    '</span>';
+
+  card.addEventListener("pointerdown", function(event) {
+    if (!started || answered || dragMode) return;
+
+    if (
+      event.pointerType === "mouse" &&
+      event.button !== 0
+    ) return;
+
+    event.preventDefault();
+
+    const rect = gameEl.getBoundingClientRect();
+
+    pointerStartX = event.clientX;
+    pointerStartY = event.clientY;
+    pointerMoved = false;
+
+    const success = beginDragging(
+      card,
+      event.clientX - rect.left,
+      event.clientY - rect.top,
+      "pointer"
+    );
+
+    if (success) {
+      activePointerId = event.pointerId;
+    }
+  });
+
+  return card;
 }
 
 // =======================================
-// 7. SISTEM SERET KAD
+// 8. KEDUDUKAN DAN PERGERAKAN KUMBANG
+// =======================================
+
+function initializeBugPositions() {
+  const width = cardsEl.clientWidth;
+  const height = cardsEl.clientHeight;
+
+  flyingBugs.forEach(function(bug, index) {
+    const cardWidth = bug.element.offsetWidth;
+    const cardHeight = bug.element.offsetHeight;
+
+    const maxX = Math.max(0, width - cardWidth);
+    const maxY = Math.max(0, height - cardHeight);
+
+    const section = width / 3;
+
+    bug.x = Math.min(
+      maxX,
+      Math.max(
+        0,
+        section * index +
+        (section - cardWidth) / 2
+      )
+    );
+
+    bug.y = Math.random() * maxY;
+
+    const speed = 20 + Math.random() * 16;
+    const angle = Math.random() * Math.PI * 2;
+
+    bug.vx = Math.cos(angle) * speed;
+    bug.vy = Math.sin(angle) * speed;
+
+    renderBug(bug);
+  });
+}
+
+function renderBug(bug) {
+  bug.element.style.left = bug.x + "px";
+  bug.element.style.top = bug.y + "px";
+}
+
+function animateBugs(timestamp) {
+  if (!lastAnimationTime) {
+    lastAnimationTime = timestamp;
+  }
+
+  const dt = Math.min(
+    (timestamp - lastAnimationTime) / 1000,
+    0.05
+  );
+
+  lastAnimationTime = timestamp;
+
+  if (started && !answered) {
+    const areaWidth = cardsEl.clientWidth;
+    const areaHeight = cardsEl.clientHeight;
+
+    flyingBugs.forEach(function(bug) {
+      if (bug.paused) return;
+
+      const maxX = Math.max(
+        0,
+        areaWidth - bug.element.offsetWidth
+      );
+
+      const maxY = Math.max(
+        0,
+        areaHeight - bug.element.offsetHeight
+      );
+
+      // Tukar arah secara beransur-ansur.
+      bug.phase += dt * 1.7;
+
+      bug.vx += Math.sin(bug.phase) * dt * 7;
+      bug.vy += Math.cos(bug.phase * 1.3) * dt * 7;
+
+      // Hadkan kelajuan agar masih boleh ditangkap.
+      const speed = Math.hypot(bug.vx, bug.vy);
+
+      if (speed > 40) {
+        bug.vx = bug.vx / speed * 40;
+        bug.vy = bug.vy / speed * 40;
+      }
+
+      bug.x += bug.vx * dt;
+      bug.y += bug.vy * dt;
+
+      if (bug.x <= 0) {
+        bug.x = 0;
+        bug.vx = Math.abs(bug.vx);
+      } else if (bug.x >= maxX) {
+        bug.x = maxX;
+        bug.vx = -Math.abs(bug.vx);
+      }
+
+      if (bug.y <= 0) {
+        bug.y = 0;
+        bug.vy = Math.abs(bug.vy);
+      } else if (bug.y >= maxY) {
+        bug.y = maxY;
+        bug.vy = -Math.abs(bug.vy);
+      }
+
+      renderBug(bug);
+    });
+  }
+
+  requestAnimationFrame(animateBugs);
+}
+
+requestAnimationFrame(animateBugs);
+
+function findBug(card) {
+  return flyingBugs.find(function(bug) {
+    return bug.element === card;
+  });
+}
+
+// =======================================
+// 9. TANGKAP DAN SERET KUMBANG
 // =======================================
 
 function beginDragging(card, x, y, mode) {
-  if (!card || !started || answered) {
-    return false;
-  }
+  if (!card || !started || answered) return false;
 
   stopDragging();
 
@@ -865,12 +1051,14 @@ function beginDragging(card, x, y, mode) {
 
   card.classList.add("selected");
 
+  const bug = findBug(card);
+  if (bug) bug.paused = true;
+
   ghost = document.createElement("div");
   ghost.className = "drag-ghost";
-  ghost.textContent = card.dataset.answer;
+  ghost.textContent = "🐞 " + card.dataset.answer;
 
   gameEl.appendChild(ghost);
-
   moveDragging(x, y);
 
   return true;
@@ -891,14 +1079,10 @@ function moveDragging(x, y) {
 function finishDragging(x, y, allowClick) {
   if (!selectedCard) return;
 
-  const choice =
-    selectedCard.dataset.answer;
-
+  const choice = selectedCard.dataset.answer;
   const inside = isInsideTarget(x, y);
 
-  const wasPointer =
-    dragMode === "pointer";
-
+  const wasPointer = dragMode === "pointer";
   const wasMoved = pointerMoved;
 
   stopDragging();
@@ -917,11 +1101,12 @@ function finishDragging(x, y, allowClick) {
 function stopDragging() {
   if (selectedCard) {
     selectedCard.classList.remove("selected");
+
+    const bug = findBug(selectedCard);
+    if (bug) bug.paused = false;
   }
 
-  if (ghost) {
-    ghost.remove();
-  }
+  if (ghost) ghost.remove();
 
   selectedCard = null;
   ghost = null;
@@ -933,11 +1118,8 @@ function stopDragging() {
 }
 
 function isInsideTarget(x, y) {
-  const gameRect =
-    gameEl.getBoundingClientRect();
-
-  const rect =
-    targetEl.getBoundingClientRect();
+  const gameRect = gameEl.getBoundingClientRect();
+  const rect = targetEl.getBoundingClientRect();
 
   return (
     x >= rect.left - gameRect.left &&
@@ -948,32 +1130,17 @@ function isInsideTarget(x, y) {
 }
 
 function getCardAt(x, y) {
-  const gameRect =
-    gameEl.getBoundingClientRect();
+  const gameRect = gameEl.getBoundingClientRect();
 
   for (const card of cardsEl.children) {
-    const rect =
-      card.getBoundingClientRect();
-
-    const margin = 12;
-
-    const left =
-      rect.left - gameRect.left - margin;
-
-    const right =
-      rect.right - gameRect.left + margin;
-
-    const top =
-      rect.top - gameRect.top - margin;
-
-    const bottom =
-      rect.bottom - gameRect.top + margin;
+    const rect = card.getBoundingClientRect();
+    const margin = 14;
 
     if (
-      x >= left &&
-      x <= right &&
-      y >= top &&
-      y <= bottom
+      x >= rect.left - gameRect.left - margin &&
+      x <= rect.right - gameRect.left + margin &&
+      y >= rect.top - gameRect.top - margin &&
+      y <= rect.bottom - gameRect.top + margin
     ) {
       return card;
     }
@@ -983,94 +1150,68 @@ function getCardAt(x, y) {
 }
 
 // =======================================
-// 8. TETIKUS DAN SENTUHAN
+// 10. TETIKUS DAN SENTUHAN
 // =======================================
 
-window.addEventListener(
-  "pointermove",
-  function(event) {
-    if (dragMode !== "pointer") return;
+window.addEventListener("pointermove", function(event) {
+  if (dragMode !== "pointer") return;
+  if (event.pointerId !== activePointerId) return;
 
-    if (
-      event.pointerId !== activePointerId
-    ) {
-      return;
-    }
-
-    if (
-      Math.hypot(
-        event.clientX - pointerStartX,
-        event.clientY - pointerStartY
-      ) > 6
-    ) {
-      pointerMoved = true;
-    }
-
-    const rect =
-      gameEl.getBoundingClientRect();
-
-    moveDragging(
-      event.clientX - rect.left,
-      event.clientY - rect.top
-    );
+  if (
+    Math.hypot(
+      event.clientX - pointerStartX,
+      event.clientY - pointerStartY
+    ) > 6
+  ) {
+    pointerMoved = true;
   }
-);
 
-window.addEventListener(
-  "pointerup",
-  function(event) {
-    if (dragMode !== "pointer") return;
+  const rect = gameEl.getBoundingClientRect();
 
-    if (
-      event.pointerId !== activePointerId
-    ) {
-      return;
-    }
+  moveDragging(
+    event.clientX - rect.left,
+    event.clientY - rect.top
+  );
+});
 
-    const rect =
-      gameEl.getBoundingClientRect();
+window.addEventListener("pointerup", function(event) {
+  if (dragMode !== "pointer") return;
+  if (event.pointerId !== activePointerId) return;
 
-    finishDragging(
-      event.clientX - rect.left,
-      event.clientY - rect.top,
-      true
-    );
+  const rect = gameEl.getBoundingClientRect();
+
+  finishDragging(
+    event.clientX - rect.left,
+    event.clientY - rect.top,
+    true
+  );
+});
+
+window.addEventListener("pointercancel", function(event) {
+  if (
+    dragMode === "pointer" &&
+    event.pointerId === activePointerId
+  ) {
+    stopDragging();
   }
-);
-
-window.addEventListener(
-  "pointercancel",
-  function(event) {
-    if (
-      dragMode === "pointer" &&
-      event.pointerId === activePointerId
-    ) {
-      stopDragging();
-    }
-  }
-);
+});
 
 // =======================================
-// 9. ANIMASI BINTANG
+// 11. ANIMASI BINTANG
 // =======================================
 
 function showStars() {
   starsLayer.innerHTML = "";
 
-  const targetRect =
-    targetEl.getBoundingClientRect();
-
-  const gameRect =
-    gameEl.getBoundingClientRect();
+  const targetRect = targetEl.getBoundingClientRect();
+  const gameRect = gameEl.getBoundingClientRect();
 
   const centerX =
-    targetRect.left -
-    gameRect.left +
+    targetRect.left - gameRect.left +
     targetRect.width / 2;
 
   const centerY =
-    targetRect.top -
-    gameRect.top +
+    targetRect.top - gameRect.top +
     targetRect.height / 2;
 
   const symbols = [
@@ -1084,31 +1225,23 @@ function showStars() {
 
     star.className = "star";
     star.textContent = symbol;
-
     star.style.left = centerX + "px";
     star.style.top = centerY + "px";
 
     const angle =
-      (Math.PI * 2 * index) /
-      symbols.length;
+      Math.PI * 2 * index / symbols.length;
 
     const distance =
       90 + Math.random() * 130;
 
-    const dx =
-      Math.cos(angle) * distance;
-
-    const dy =
-      Math.sin(angle) * distance;
-
     star.style.setProperty(
       "--dx",
-      dx + "px"
+      Math.cos(angle) * distance + "px"
     );
 
     star.style.setProperty(
       "--dy",
-      dy + "px"
+      Math.sin(angle) * distance + "px"
     );
 
     starsLayer.appendChild(star);
@@ -1120,7 +1253,7 @@ function showStars() {
 }
 
 // =======================================
-// 10. SEMAK JAWAPAN
+// 12. SEMAK JAWAPAN
 // =======================================
 
 function checkAnswer(choice) {
@@ -1128,13 +1261,9 @@ function checkAnswer(choice) {
 
   clearTimeout(feedbackTimer);
 
-  targetEl.classList.remove(
-    "wrong",
-    "correct"
-  );
+  targetEl.classList.remove("wrong", "correct");
 
-  const correct =
-    questions[currentQuestion].answer;
+  const correct = questions[currentQuestion].answer;
 
   if (choice === correct) {
     answered = true;
@@ -1142,16 +1271,12 @@ function checkAnswer(choice) {
 
     messageEl.textContent =
       "🌟 Syabas! Jawapan anda betul!";
-
     messageEl.style.color = "#148448";
 
-    targetEl.textContent =
-      "✅ " + choice;
-
+    targetEl.textContent = "✅ " + choice;
     targetEl.classList.add("correct");
 
     showStars();
-
     playSound(780);
 
     setTimeout(function() {
@@ -1162,54 +1287,39 @@ function checkAnswer(choice) {
       card.disabled = true;
     }
 
-    nextQuestionTimer = setTimeout(
-      function() {
-        if (
-          currentQuestion <
-          questions.length - 1
-        ) {
-          currentQuestion++;
-          showQuestion();
-        } else {
-          finishGame();
-        }
-      },
-      1700
-    );
+    nextQuestionTimer = setTimeout(function() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        finishGame();
+      }
+    }, 1700);
 
   } else {
     messageEl.textContent =
-      "❌ Jawapan belum tepat. " +
-      "Baca pantun dan cuba lagi!";
-
+      "❌ Jawapan belum tepat. Baca pantun dan cuba lagi!";
     messageEl.style.color = "#c73530";
 
-    targetEl.textContent =
-      "❌ Cuba Lagi!";
+    targetEl.textContent = "❌ Cuba Lagi!";
 
-    // Mulakan semula animasi gegaran.
     void targetEl.offsetWidth;
-
     targetEl.classList.add("wrong");
 
     playSound(250);
 
-    feedbackTimer = setTimeout(
-      function() {
-        if (!answered && started) {
-          targetEl.classList.remove("wrong");
-
-          targetEl.textContent =
-            "🎯 Letakkan jawapan di sini";
-        }
-      },
-      1100
-    );
+    feedbackTimer = setTimeout(function() {
+      if (!answered && started) {
+        targetEl.classList.remove("wrong");
+        targetEl.textContent =
+          "🎯 Letakkan jawapan di sini";
+      }
+    }, 1100);
   }
 }
 
 // =======================================
-// 11. TAMAT PERMAINAN
+// 13. TAMAT PERMAINAN
 // =======================================
 
 function finishGame() {
@@ -1217,46 +1327,36 @@ function finishGame() {
 
   started = false;
   answered = true;
+  flyingBugs = [];
 
   gameEl.classList.add("finished");
 
   questionEl.innerHTML =
-    '<div class="finish-title">' +
-    '🎉 TAHNIAH! 🎉' +
-    '</div>' +
+    '<div class="finish-title">🎉 TAHNIAH! 🎉</div>' +
     '<div class="finish-text">' +
     'Anda berjaya menyelesaikan tugasan.<br>' +
     'Sila ke zon seterusnya. 🌿' +
     '</div>' +
-    '<button class="action" ' +
-    'id="playAgainBtn" type="button">' +
-    '🔄 Main Semula' +
-    '</button>';
+    '<button class="action" id="playAgainBtn" ' +
+    'type="button">🔄 Main Semula</button>';
 
-  document
-    .getElementById("playAgainBtn")
-    .addEventListener(
-      "click",
-      startGame
-    );
+  document.getElementById("playAgainBtn")
+    .addEventListener("click", startGame);
 
   cardsEl.innerHTML = "";
   targetEl.textContent = "";
 
   progressEl.textContent =
-    "Misi Selesai: " +
-    score +
-    " / " +
-    questions.length;
+    "Misi Selesai: " + score +
+    " / " + questions.length;
 
   messageEl.textContent =
     "🏆 Syabas! Semua misi berjaya diselesaikan.";
-
   messageEl.style.color = "#148448";
 }
 
 // =======================================
-// 12. KAMERA AR AUTOMATIK
+// 14. KAMERA AR
 // =======================================
 
 async function startCamera() {
@@ -1271,8 +1371,7 @@ async function startCamera() {
 
   if (typeof Hands === "undefined") {
     statusEl.textContent =
-      "MediaPipe belum dimuatkan. " +
-      "Semak sambungan Internet. " +
+      "MediaPipe belum dimuatkan. Semak Internet. " +
       "Anda masih boleh bermain menggunakan tetikus.";
     return;
   }
@@ -1292,15 +1391,13 @@ async function startCamera() {
       });
 
     video.srcObject = cameraStream;
-
     await video.play();
 
     hands = new Hands({
       locateFile: function(file) {
         return (
           "https://cdn.jsdelivr.net/npm/" +
-          "@mediapipe/hands/" +
-          file
+          "@mediapipe/hands/" + file
         );
       }
     });
@@ -1331,46 +1428,32 @@ async function startCamera() {
       ". Gunakan tetikus atau sentuhan untuk bermain.";
 
     if (cameraStream) {
-      cameraStream
-        .getTracks()
-        .forEach(function(track) {
-          track.stop();
-        });
+      cameraStream.getTracks().forEach(function(track) {
+        track.stop();
+      });
     }
 
     cameraStream = null;
   }
 }
 
-window.addEventListener(
-  "load",
-  function() {
-    startCamera();
-  }
-);
+window.addEventListener("load", startCamera);
 
 // =======================================
-// 13. PROSES KAMERA
+// 15. PROSES KAMERA
 // =======================================
 
 async function trackFrame() {
   if (!tracking) return;
 
-  if (
-    !processing &&
-    video.readyState >= 2
-  ) {
+  if (!processing && video.readyState >= 2) {
     processing = true;
 
     try {
-      await hands.send({
-        image: video
-      });
+      await hands.send({ image: video });
     } catch (error) {
       statusEl.textContent =
-        "Ralat hand tracking: " +
-        error.message;
-
+        "Ralat hand tracking: " + error.message;
       tracking = false;
     } finally {
       processing = false;
@@ -1383,12 +1466,11 @@ async function trackFrame() {
 }
 
 // =======================================
-// 14. KESAN TANGAN DAN CUBITAN
+// 16. KESAN TANGAN DAN CUBITAN
 // =======================================
 
 function onHandResults(results) {
-  const landmarks =
-    results.multiHandLandmarks?.[0];
+  const landmarks = results.multiHandLandmarks?.[0];
 
   if (!landmarks) {
     cursorEl.style.display = "none";
@@ -1404,25 +1486,18 @@ function onHandResults(results) {
   const indexTip = landmarks[8];
   const thumbTip = landmarks[4];
 
-  const rect =
-    gameEl.getBoundingClientRect();
+  const rect = gameEl.getBoundingClientRect();
 
-  const videoWidth =
-    video.videoWidth || 640;
-
-  const videoHeight =
-    video.videoHeight || 480;
+  const videoWidth = video.videoWidth || 640;
+  const videoHeight = video.videoHeight || 480;
 
   const scale = Math.max(
     rect.width / videoWidth,
     rect.height / videoHeight
   );
 
-  const displayedWidth =
-    videoWidth * scale;
-
-  const displayedHeight =
-    videoHeight * scale;
+  const displayedWidth = videoWidth * scale;
+  const displayedHeight = videoHeight * scale;
 
   const cropX =
     (displayedWidth - rect.width) / 2;
@@ -1431,14 +1506,10 @@ function onHandResults(results) {
     (displayedHeight - rect.height) / 2;
 
   handX =
-    (1 - indexTip.x) *
-    displayedWidth -
-    cropX;
+    (1 - indexTip.x) * displayedWidth - cropX;
 
   handY =
-    indexTip.y *
-    displayedHeight -
-    cropY;
+    indexTip.y * displayedHeight - cropY;
 
   cursorEl.style.display = "block";
   cursorEl.style.left = handX + "px";
@@ -1449,8 +1520,7 @@ function onHandResults(results) {
     indexTip.y - thumbTip.y
   );
 
-  const isPinching =
-    distance < 0.09;
+  const isPinching = distance < 0.09;
 
   cursorEl.classList.toggle(
     "pinching",
@@ -1462,13 +1532,9 @@ function onHandResults(results) {
     return;
   }
 
-  if (
-    isPinching &&
-    !previousPinch
-  ) {
+  if (isPinching && !previousPinch) {
     if (!dragMode) {
-      const card =
-        getCardAt(handX, handY);
+      const card = getCardAt(handX, handY);
 
       if (card) {
         beginDragging(
@@ -1481,23 +1547,13 @@ function onHandResults(results) {
     }
   }
 
-  if (
-    isPinching &&
-    dragMode === "hand"
-  ) {
+  if (isPinching && dragMode === "hand") {
     moveDragging(handX, handY);
   }
 
-  if (
-    !isPinching &&
-    previousPinch
-  ) {
+  if (!isPinching && previousPinch) {
     if (dragMode === "hand") {
-      finishDragging(
-        handX,
-        handY,
-        false
-      );
+      finishDragging(handX, handY, false);
     }
   }
 
@@ -1505,7 +1561,7 @@ function onHandResults(results) {
 }
 
 // =======================================
-// 15. KESAN BUNYI
+// 17. KESAN BUNYI
 // =======================================
 
 let audioContext = null;
@@ -1516,13 +1572,10 @@ function getAudioContext() {
       window.AudioContext ||
       window.webkitAudioContext;
 
-    audioContext =
-      new AudioClass();
+    audioContext = new AudioClass();
   }
 
-  if (
-    audioContext.state === "suspended"
-  ) {
+  if (audioContext.state === "suspended") {
     audioContext.resume();
   }
 
@@ -1531,32 +1584,24 @@ function getAudioContext() {
 
 function playSound(
   frequency,
-  duration = 0.2,
-  volume = 0.09
+  duration = .2,
+  volume = .09
 ) {
   try {
     const ctx = getAudioContext();
 
-    const oscillator =
-      ctx.createOscillator();
-
-    const gain =
-      ctx.createGain();
+    const oscillator = ctx.createOscillator();
+    const gain = ctx.createGain();
 
     oscillator.type = "sine";
-    oscillator.frequency.value =
-      frequency;
+    oscillator.frequency.value = frequency;
 
-    const now =
-      ctx.currentTime;
+    const now = ctx.currentTime;
 
-    gain.gain.setValueAtTime(
-      volume,
-      now
-    );
+    gain.gain.setValueAtTime(volume, now);
 
     gain.gain.exponentialRampToValueAtTime(
-      0.001,
+      .001,
       now + duration
     );
 
@@ -1564,39 +1609,29 @@ function playSound(
     gain.connect(ctx.destination);
 
     oscillator.start(now);
-    oscillator.stop(
-      now + duration
-    );
+    oscillator.stop(now + duration);
 
   } catch (error) {
-    console.log(
-      "Audio tidak tersedia:",
-      error
-    );
+    console.log("Audio tidak tersedia:", error);
   }
 }
 
 // =======================================
-// 16. TUTUP KAMERA
+// 18. TUTUP KAMERA
 // =======================================
 
-window.addEventListener(
-  "pagehide",
-  function() {
-    tracking = false;
+window.addEventListener("pagehide", function() {
+  tracking = false;
 
-    clearTimeout(nextQuestionTimer);
-    clearTimeout(feedbackTimer);
+  clearTimeout(nextQuestionTimer);
+  clearTimeout(feedbackTimer);
 
-    if (cameraStream) {
-      cameraStream
-        .getTracks()
-        .forEach(function(track) {
-          track.stop();
-        });
-    }
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(function(track) {
+      track.stop();
+    });
   }
-);
+});
 </script>
 
 </body>
