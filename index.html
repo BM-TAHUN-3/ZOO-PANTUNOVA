@@ -4,12 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rima Rimba AR</title>
+<title>Zon 2: Rima Rimba AR</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
@@ -49,7 +51,7 @@ header h1 {
 
 .game {
   position: relative;
-  height: 530px;
+  height: 570px;
   overflow: hidden;
   border: 7px solid white;
   border-radius: 25px;
@@ -80,8 +82,15 @@ header h1 {
   pointer-events: none;
 }
 
-.cloud.one { top: 10px; left: 5%; }
-.cloud.two { top: 40px; right: 18%; }
+.cloud.one {
+  top: 10px;
+  left: 5%;
+}
+
+.cloud.two {
+  top: 40px;
+  right: 18%;
+}
 
 .tree {
   position: absolute;
@@ -90,8 +99,13 @@ header h1 {
   pointer-events: none;
 }
 
-.tree.left { left: -15px; }
-.tree.right { right: -15px; }
+.tree.left {
+  left: -15px;
+}
+
+.tree.right {
+  right: -15px;
+}
 
 .grass {
   position: absolute;
@@ -111,15 +125,22 @@ header h1 {
   animation: bounce 2.5s ease-in-out infinite;
 }
 
-.animal.left { left: 4%; }
+.animal.left {
+  left: 4%;
+}
+
 .animal.right {
   right: 5%;
   animation-delay: 1s;
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 #camera {
@@ -134,7 +155,9 @@ header h1 {
   pointer-events: none;
 }
 
-#camera.active { opacity: 0.5; }
+#camera.active {
+  opacity: 0.5;
+}
 
 .overlay {
   position: absolute;
@@ -148,29 +171,30 @@ header h1 {
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
-  width: min(92%, 720px);
+  width: min(94%, 800px);
   background: #fffdf0f5;
   border: 4px solid #f7d36c;
   border-radius: 20px;
-  padding: 15px;
+  padding: 19px 15px;
   text-align: center;
-  font-size: clamp(15px, 2.3vw, 20px);
+  font-size: clamp(19px, 2.6vw, 25px);
   font-weight: bold;
-  line-height: 1.65;
+  line-height: 1.6;
   box-shadow: 0 5px 12px #0002;
 }
 
 .question-title {
   color: #16854a;
+  font-size: 19px;
   margin-bottom: 7px;
 }
 
 .answer-zone {
   position: absolute;
-  top: 57%;
+  top: 63%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(65%, 320px);
+  width: min(65%, 340px);
   min-height: 90px;
   display: flex;
   align-items: center;
@@ -192,6 +216,28 @@ header h1 {
   transform: translate(-50%, -50%) scale(1.05);
 }
 
+.answer-zone.wrong {
+  background: #d94b45;
+  animation: shake 0.35s ease-in-out;
+}
+
+.answer-zone.correct {
+  background: #19a65b;
+  border-style: solid;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+  25% {
+    transform: translate(-50%, -50%) translateX(-9px);
+  }
+  75% {
+    transform: translate(-50%, -50%) translateX(9px);
+  }
+}
+
 #startBtn {
   pointer-events: auto;
   background: #ffdf70;
@@ -200,7 +246,9 @@ header h1 {
   padding: 16px 26px;
 }
 
-#startBtn:hover { background: #ffe995; }
+#startBtn:hover {
+  background: #ffe995;
+}
 
 .cards {
   position: absolute;
@@ -275,6 +323,42 @@ header h1 {
   transform: translate(-50%, -50%) scale(0.8);
 }
 
+/* Animasi bintang */
+
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  font-size: 32px;
+  animation: starBurst 1.15s ease-out forwards;
+}
+
+@keyframes starBurst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform:
+      translate(
+        calc(-50% + var(--dx)),
+        calc(-50% + var(--dy))
+      )
+      rotate(200deg)
+      scale(1.4);
+  }
+}
+
 .panel {
   background: white;
   border-radius: 20px;
@@ -302,7 +386,9 @@ header h1 {
   cursor: pointer;
 }
 
-.action:hover { background: #1b6f42; }
+.action:hover {
+  background: #1b6f42;
+}
 
 #message {
   min-height: 28px;
@@ -325,8 +411,21 @@ header h1 {
   line-height: 1.7;
 }
 
+.instructions[hidden] {
+  display: none;
+}
+
+.help-button {
+  background: #f5b638;
+  color: #483814;
+}
+
+.help-button:hover {
+  background: #e6a523;
+}
+
 .game.finished .question {
-  top: 35%;
+  top: 32%;
   width: min(90%, 650px);
   padding: 28px 18px;
   border: 5px solid #ffd568;
@@ -346,7 +445,9 @@ header h1 {
   margin-bottom: 10px;
 }
 
-.finish-text { color: #24513b; }
+.finish-text {
+  color: #24513b;
+}
 
 .game.finished .answer-zone,
 .game.finished .cards {
@@ -354,13 +455,39 @@ header h1 {
 }
 
 @media (max-width: 600px) {
-  .game { height: 580px; }
-  .tree { font-size: 65px; }
-  .animal { font-size: 42px; }
-  .question { top: 10px; padding: 9px; }
-  .answer-zone { top: 59%; }
-  .cards { bottom: 16px; gap: 7px; }
-  .card { padding: 11px; font-size: 15px; }
+  .game {
+    height: 620px;
+  }
+
+  .tree {
+    font-size: 65px;
+  }
+
+  .animal {
+    font-size: 42px;
+  }
+
+  .question {
+    top: 10px;
+    padding: 12px 8px;
+    font-size: clamp(17px, 4vw, 21px);
+    line-height: 1.55;
+  }
+
+  .answer-zone {
+    top: 65%;
+    width: 76%;
+  }
+
+  .cards {
+    bottom: 16px;
+    gap: 7px;
+  }
+
+  .card {
+    padding: 11px;
+    font-size: 15px;
+  }
 }
 </style>
 </head>
@@ -405,6 +532,7 @@ header h1 {
 
       <div class="cards" id="cards"></div>
       <div class="cursor" id="cursor"></div>
+      <div class="stars-layer" id="starsLayer"></div>
 
     </div>
   </div>
@@ -417,21 +545,45 @@ header h1 {
 
     <p id="message" aria-live="polite"></p>
 
+    <button
+      class="action help-button"
+      id="helpBtn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="instructions"
+    >
+      📖 Cara Bermain
+    </button>
+
     <p id="status" aria-live="polite">
       📷 Kamera AR sedang disediakan secara automatik...
     </p>
 
   </div>
 
-  <div class="instructions">
-    <strong>🖐️ Kamera AR:</strong>
-    Letakkan bulatan kuning pada kad.
-    Cubit ibu jari dan jari telunjuk untuk mengambil kad,
-    gerakkan ke petak hijau dan lepaskan cubitan.
-    <br>
-    <strong>🖱️ Tetikus:</strong>
-    Klik dan tahan kad, seret ke petak hijau, kemudian lepaskan.
-    Murid juga boleh klik kad untuk memilih jawapan.
+  <div class="instructions" id="instructions" hidden>
+    <strong>🌿 Cara Bermain:</strong>
+    <p>
+      1. Tekan butang <strong>Mula Bermain</strong>.<br>
+      2. Baca pantun dengan teliti.<br>
+      3. Pilih perkataan yang sesuai untuk melengkapkan pantun.<br>
+      4. Seret kad jawapan ke dalam petak hijau.<br>
+      5. Lengkapkan kelima-lima misi.
+    </p>
+
+    <strong>🖐️ Menggunakan Kamera AR:</strong>
+    <p>
+      Letakkan bulatan kuning pada kad jawapan.
+      Cubit ibu jari dan jari telunjuk untuk mengambil kad.
+      Gerakkan kad ke petak hijau dan lepaskan cubitan.
+    </p>
+
+    <strong>🖱️ Menggunakan Tetikus atau Sentuhan:</strong>
+    <p>
+      Klik dan tahan kad, seret ke petak hijau,
+      kemudian lepaskan.
+      Murid juga boleh klik kad untuk memilih jawapan.
+    </p>
   </div>
 
 </div>
@@ -439,8 +591,9 @@ header h1 {
 <script>
 "use strict";
 
+// =======================================
 // 1. SOALAN PANTUN
-// Jawapan betul dipelbagaikan: kiri, tengah dan kanan.
+// =======================================
 
 const questions = [
   {
@@ -495,7 +648,9 @@ const questions = [
   }
 ];
 
+// =======================================
 // 2. ELEMEN PERMAINAN
+// =======================================
 
 const gameEl = document.getElementById("game");
 const video = document.getElementById("camera");
@@ -507,9 +662,15 @@ const cursorEl = document.getElementById("cursor");
 const progressEl = document.getElementById("progress");
 const messageEl = document.getElementById("message");
 const statusEl = document.getElementById("status");
-const startBtn = document.getElementById("startBtn");
 
+const startBtn = document.getElementById("startBtn");
+const helpBtn = document.getElementById("helpBtn");
+const instructionsEl = document.getElementById("instructions");
+const starsLayer = document.getElementById("starsLayer");
+
+// =======================================
 // 3. PEMBOLEH UBAH
+// =======================================
 
 let currentQuestion = 0;
 let score = 0;
@@ -520,6 +681,7 @@ let selectedCard = null;
 let ghost = null;
 let dragMode = null;
 let activePointerId = null;
+
 let pointerStartX = 0;
 let pointerStartY = 0;
 let pointerMoved = false;
@@ -533,11 +695,53 @@ let previousPinch = false;
 let handX = 0;
 let handY = 0;
 let nextQuestionTimer = null;
+let feedbackTimer = null;
 
-// 4. MULA PERMAINAN
+// =======================================
+// 4. BUTANG CARA BERMAIN
+// =======================================
+
+helpBtn.addEventListener("click", function() {
+  const isHidden = instructionsEl.hidden;
+
+  instructionsEl.hidden = !isHidden;
+
+  helpBtn.setAttribute(
+    "aria-expanded",
+    String(isHidden)
+  );
+
+  helpBtn.textContent = isHidden
+    ? "✖ Tutup Cara Bermain"
+    : "📖 Cara Bermain";
+});
+
+// =======================================
+// 5. RAWAKKAN KEDUDUKAN JAWAPAN
+// =======================================
+
+function shuffleChoices(choices) {
+  const shuffled = [...choices];
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(
+      Math.random() * (i + 1)
+    );
+
+    [shuffled[i], shuffled[j]] =
+      [shuffled[j], shuffled[i]];
+  }
+
+  return shuffled;
+}
+
+// =======================================
+// 6. MULA PERMAINAN
+// =======================================
 
 function startGame() {
   clearTimeout(nextQuestionTimer);
+  clearTimeout(feedbackTimer);
 
   currentQuestion = 0;
   score = 0;
@@ -545,6 +749,7 @@ function startGame() {
   answered = false;
 
   gameEl.classList.remove("finished");
+  starsLayer.innerHTML = "";
 
   showQuestion();
 }
@@ -554,13 +759,22 @@ startBtn.addEventListener("click", startGame);
 function showQuestion() {
   stopDragging();
 
+  clearTimeout(feedbackTimer);
+
   answered = false;
   previousPinch = false;
 
   gameEl.classList.remove("finished");
 
+  targetEl.classList.remove(
+    "wrong",
+    "correct",
+    "hover"
+  );
+
   messageEl.textContent = "";
-  targetEl.textContent = "🎯 Letakkan jawapan di sini";
+  targetEl.textContent =
+    "🎯 Letakkan jawapan di sini";
 
   const q = questions[currentQuestion];
 
@@ -569,12 +783,18 @@ function showQuestion() {
     " / " + questions.length;
 
   questionEl.innerHTML =
-    '<div class="question-title">🪲 Lengkapkan Pantun!</div>' +
+    '<div class="question-title">' +
+    '🪲 Lengkapkan Pantun!' +
+    '</div>' +
     q.lines.map(escapeHTML).join("<br>");
 
   cardsEl.innerHTML = "";
 
-  q.choices.forEach(function(choice) {
+  // Jawapan diacak setiap kali soalan muncul.
+  const randomizedChoices =
+    shuffleChoices(q.choices);
+
+  randomizedChoices.forEach(function(choice) {
     const card = document.createElement("button");
 
     card.type = "button";
@@ -582,33 +802,41 @@ function showQuestion() {
     card.textContent = choice;
     card.dataset.answer = choice;
 
-    card.addEventListener("pointerdown", function(event) {
-      if (!started || answered || dragMode) return;
+    card.addEventListener(
+      "pointerdown",
+      function(event) {
+        if (!started || answered || dragMode) {
+          return;
+        }
 
-      if (
-        event.pointerType === "mouse" &&
-        event.button !== 0
-      ) return;
+        if (
+          event.pointerType === "mouse" &&
+          event.button !== 0
+        ) {
+          return;
+        }
 
-      event.preventDefault();
+        event.preventDefault();
 
-      const rect = gameEl.getBoundingClientRect();
+        const rect =
+          gameEl.getBoundingClientRect();
 
-      pointerStartX = event.clientX;
-      pointerStartY = event.clientY;
-      pointerMoved = false;
+        pointerStartX = event.clientX;
+        pointerStartY = event.clientY;
+        pointerMoved = false;
 
-      const success = beginDragging(
-        card,
-        event.clientX - rect.left,
-        event.clientY - rect.top,
-        "pointer"
-      );
+        const success = beginDragging(
+          card,
+          event.clientX - rect.left,
+          event.clientY - rect.top,
+          "pointer"
+        );
 
-      if (success) {
-        activePointerId = event.pointerId;
+        if (success) {
+          activePointerId = event.pointerId;
+        }
       }
-    });
+    );
 
     cardsEl.appendChild(card);
   });
@@ -621,15 +849,20 @@ function escapeHTML(value) {
     .replaceAll(">", "&gt;");
 }
 
-// 5. SISTEM SERET KAD
+// =======================================
+// 7. SISTEM SERET KAD
+// =======================================
 
 function beginDragging(card, x, y, mode) {
-  if (!card || !started || answered) return false;
+  if (!card || !started || answered) {
+    return false;
+  }
 
   stopDragging();
 
   selectedCard = card;
   dragMode = mode;
+
   card.classList.add("selected");
 
   ghost = document.createElement("div");
@@ -637,6 +870,7 @@ function beginDragging(card, x, y, mode) {
   ghost.textContent = card.dataset.answer;
 
   gameEl.appendChild(ghost);
+
   moveDragging(x, y);
 
   return true;
@@ -657,17 +891,25 @@ function moveDragging(x, y) {
 function finishDragging(x, y, allowClick) {
   if (!selectedCard) return;
 
-  const choice = selectedCard.dataset.answer;
+  const choice =
+    selectedCard.dataset.answer;
+
   const inside = isInsideTarget(x, y);
 
-  const wasPointer = dragMode === "pointer";
+  const wasPointer =
+    dragMode === "pointer";
+
   const wasMoved = pointerMoved;
 
   stopDragging();
 
   if (inside) {
     checkAnswer(choice);
-  } else if (allowClick && wasPointer && !wasMoved) {
+  } else if (
+    allowClick &&
+    wasPointer &&
+    !wasMoved
+  ) {
     checkAnswer(choice);
   }
 }
@@ -677,7 +919,9 @@ function stopDragging() {
     selectedCard.classList.remove("selected");
   }
 
-  if (ghost) ghost.remove();
+  if (ghost) {
+    ghost.remove();
+  }
 
   selectedCard = null;
   ghost = null;
@@ -689,8 +933,11 @@ function stopDragging() {
 }
 
 function isInsideTarget(x, y) {
-  const gameRect = gameEl.getBoundingClientRect();
-  const rect = targetEl.getBoundingClientRect();
+  const gameRect =
+    gameEl.getBoundingClientRect();
+
+  const rect =
+    targetEl.getBoundingClientRect();
 
   return (
     x >= rect.left - gameRect.left &&
@@ -701,20 +948,32 @@ function isInsideTarget(x, y) {
 }
 
 function getCardAt(x, y) {
-  const gameRect = gameEl.getBoundingClientRect();
+  const gameRect =
+    gameEl.getBoundingClientRect();
 
   for (const card of cardsEl.children) {
-    const rect = card.getBoundingClientRect();
+    const rect =
+      card.getBoundingClientRect();
+
     const margin = 12;
 
-    const left = rect.left - gameRect.left - margin;
-    const right = rect.right - gameRect.left + margin;
-    const top = rect.top - gameRect.top - margin;
-    const bottom = rect.bottom - gameRect.top + margin;
+    const left =
+      rect.left - gameRect.left - margin;
+
+    const right =
+      rect.right - gameRect.left + margin;
+
+    const top =
+      rect.top - gameRect.top - margin;
+
+    const bottom =
+      rect.bottom - gameRect.top + margin;
 
     if (
-      x >= left && x <= right &&
-      y >= top && y <= bottom
+      x >= left &&
+      x <= right &&
+      y >= top &&
+      y <= bottom
     ) {
       return card;
     }
@@ -723,67 +982,175 @@ function getCardAt(x, y) {
   return null;
 }
 
-// 6. TETIKUS / SENTUHAN
+// =======================================
+// 8. TETIKUS DAN SENTUHAN
+// =======================================
 
-window.addEventListener("pointermove", function(event) {
-  if (dragMode !== "pointer") return;
-  if (event.pointerId !== activePointerId) return;
+window.addEventListener(
+  "pointermove",
+  function(event) {
+    if (dragMode !== "pointer") return;
 
-  if (
-    Math.hypot(
-      event.clientX - pointerStartX,
-      event.clientY - pointerStartY
-    ) > 6
-  ) {
-    pointerMoved = true;
+    if (
+      event.pointerId !== activePointerId
+    ) {
+      return;
+    }
+
+    if (
+      Math.hypot(
+        event.clientX - pointerStartX,
+        event.clientY - pointerStartY
+      ) > 6
+    ) {
+      pointerMoved = true;
+    }
+
+    const rect =
+      gameEl.getBoundingClientRect();
+
+    moveDragging(
+      event.clientX - rect.left,
+      event.clientY - rect.top
+    );
   }
+);
 
-  const rect = gameEl.getBoundingClientRect();
+window.addEventListener(
+  "pointerup",
+  function(event) {
+    if (dragMode !== "pointer") return;
 
-  moveDragging(
-    event.clientX - rect.left,
-    event.clientY - rect.top
-  );
-});
+    if (
+      event.pointerId !== activePointerId
+    ) {
+      return;
+    }
 
-window.addEventListener("pointerup", function(event) {
-  if (dragMode !== "pointer") return;
-  if (event.pointerId !== activePointerId) return;
+    const rect =
+      gameEl.getBoundingClientRect();
 
-  const rect = gameEl.getBoundingClientRect();
-
-  finishDragging(
-    event.clientX - rect.left,
-    event.clientY - rect.top,
-    true
-  );
-});
-
-window.addEventListener("pointercancel", function(event) {
-  if (
-    dragMode === "pointer" &&
-    event.pointerId === activePointerId
-  ) {
-    stopDragging();
+    finishDragging(
+      event.clientX - rect.left,
+      event.clientY - rect.top,
+      true
+    );
   }
-});
+);
 
-// 7. SEMAK JAWAPAN
+window.addEventListener(
+  "pointercancel",
+  function(event) {
+    if (
+      dragMode === "pointer" &&
+      event.pointerId === activePointerId
+    ) {
+      stopDragging();
+    }
+  }
+);
+
+// =======================================
+// 9. ANIMASI BINTANG
+// =======================================
+
+function showStars() {
+  starsLayer.innerHTML = "";
+
+  const targetRect =
+    targetEl.getBoundingClientRect();
+
+  const gameRect =
+    gameEl.getBoundingClientRect();
+
+  const centerX =
+    targetRect.left -
+    gameRect.left +
+    targetRect.width / 2;
+
+  const centerY =
+    targetRect.top -
+    gameRect.top +
+    targetRect.height / 2;
+
+  const symbols = [
+    "⭐", "🌟", "✨", "⭐",
+    "✨", "🌟", "⭐", "✨",
+    "🌟", "⭐", "✨", "⭐"
+  ];
+
+  symbols.forEach(function(symbol, index) {
+    const star = document.createElement("span");
+
+    star.className = "star";
+    star.textContent = symbol;
+
+    star.style.left = centerX + "px";
+    star.style.top = centerY + "px";
+
+    const angle =
+      (Math.PI * 2 * index) /
+      symbols.length;
+
+    const distance =
+      90 + Math.random() * 130;
+
+    const dx =
+      Math.cos(angle) * distance;
+
+    const dy =
+      Math.sin(angle) * distance;
+
+    star.style.setProperty(
+      "--dx",
+      dx + "px"
+    );
+
+    star.style.setProperty(
+      "--dy",
+      dy + "px"
+    );
+
+    starsLayer.appendChild(star);
+
+    setTimeout(function() {
+      star.remove();
+    }, 1200);
+  });
+}
+
+// =======================================
+// 10. SEMAK JAWAPAN
+// =======================================
 
 function checkAnswer(choice) {
   if (!started || answered) return;
 
-  const correct = questions[currentQuestion].answer;
+  clearTimeout(feedbackTimer);
+
+  targetEl.classList.remove(
+    "wrong",
+    "correct"
+  );
+
+  const correct =
+    questions[currentQuestion].answer;
 
   if (choice === correct) {
     answered = true;
     score++;
 
     messageEl.textContent =
-      "🌟 Tahniah! Jawapan anda betul!";
+      "🌟 Syabas! Jawapan anda betul!";
+
     messageEl.style.color = "#148448";
 
-    targetEl.textContent = "✅ " + choice;
+    targetEl.textContent =
+      "✅ " + choice;
+
+    targetEl.classList.add("correct");
+
+    showStars();
 
     playSound(780);
 
@@ -795,27 +1162,55 @@ function checkAnswer(choice) {
       card.disabled = true;
     }
 
-    nextQuestionTimer = setTimeout(function() {
-      if (currentQuestion < questions.length - 1) {
-        currentQuestion++;
-        showQuestion();
-      } else {
-        finishGame();
-      }
-    }, 1500);
+    nextQuestionTimer = setTimeout(
+      function() {
+        if (
+          currentQuestion <
+          questions.length - 1
+        ) {
+          currentQuestion++;
+          showQuestion();
+        } else {
+          finishGame();
+        }
+      },
+      1700
+    );
 
   } else {
     messageEl.textContent =
-      "💡 Belum tepat! Cuba lagi sehingga betul.";
-    messageEl.style.color = "#bc581d";
+      "❌ Jawapan belum tepat. " +
+      "Baca pantun dan cuba lagi!";
 
-    targetEl.textContent = "🔄 Cuba jawapan lain!";
+    messageEl.style.color = "#c73530";
+
+    targetEl.textContent =
+      "❌ Cuba Lagi!";
+
+    // Mulakan semula animasi gegaran.
+    void targetEl.offsetWidth;
+
+    targetEl.classList.add("wrong");
 
     playSound(250);
+
+    feedbackTimer = setTimeout(
+      function() {
+        if (!answered && started) {
+          targetEl.classList.remove("wrong");
+
+          targetEl.textContent =
+            "🎯 Letakkan jawapan di sini";
+        }
+      },
+      1100
+    );
   }
 }
 
-// 8. TAMAT PERMAINAN
+// =======================================
+// 11. TAMAT PERMAINAN
+// =======================================
 
 function finishGame() {
   stopDragging();
@@ -826,29 +1221,43 @@ function finishGame() {
   gameEl.classList.add("finished");
 
   questionEl.innerHTML =
-    '<div class="finish-title">🎉 TAHNIAH! 🎉</div>' +
+    '<div class="finish-title">' +
+    '🎉 TAHNIAH! 🎉' +
+    '</div>' +
     '<div class="finish-text">' +
     'Anda berjaya menyelesaikan tugasan.<br>' +
     'Sila ke zon seterusnya. 🌿' +
     '</div>' +
-    '<button class="action" id="playAgainBtn" ' +
-    'type="button">🔄 Main Semula</button>';
+    '<button class="action" ' +
+    'id="playAgainBtn" type="button">' +
+    '🔄 Main Semula' +
+    '</button>';
 
-  document.getElementById("playAgainBtn")
-    .addEventListener("click", startGame);
+  document
+    .getElementById("playAgainBtn")
+    .addEventListener(
+      "click",
+      startGame
+    );
 
   cardsEl.innerHTML = "";
   targetEl.textContent = "";
 
   progressEl.textContent =
-    "Misi Selesai: " + score + " / " + questions.length;
+    "Misi Selesai: " +
+    score +
+    " / " +
+    questions.length;
 
   messageEl.textContent =
     "🏆 Syabas! Semua misi berjaya diselesaikan.";
+
   messageEl.style.color = "#148448";
 }
 
-// 9. KAMERA AR AUTOMATIK
+// =======================================
+// 12. KAMERA AR AUTOMATIK
+// =======================================
 
 async function startCamera() {
   if (tracking || cameraStream) return;
@@ -862,7 +1271,8 @@ async function startCamera() {
 
   if (typeof Hands === "undefined") {
     statusEl.textContent =
-      "MediaPipe belum dimuatkan. Semak Internet. " +
+      "MediaPipe belum dimuatkan. " +
+      "Semak sambungan Internet. " +
       "Anda masih boleh bermain menggunakan tetikus.";
     return;
   }
@@ -882,12 +1292,14 @@ async function startCamera() {
       });
 
     video.srcObject = cameraStream;
+
     await video.play();
 
     hands = new Hands({
       locateFile: function(file) {
         return (
-          "https://cdn.jsdelivr.net/npm/@mediapipe/hands/" +
+          "https://cdn.jsdelivr.net/npm/" +
+          "@mediapipe/hands/" +
           file
         );
       }
@@ -906,7 +1318,8 @@ async function startCamera() {
     tracking = true;
 
     statusEl.textContent =
-      "📷 Kamera AR aktif! 🟡 Kuning: tangan dikesan. " +
+      "📷 Kamera AR aktif! " +
+      "🟡 Kuning: tangan dikesan. " +
       "🔴 Merah: cubitan dikesan.";
 
     trackFrame();
@@ -918,32 +1331,46 @@ async function startCamera() {
       ". Gunakan tetikus atau sentuhan untuk bermain.";
 
     if (cameraStream) {
-      cameraStream.getTracks().forEach(function(track) {
-        track.stop();
-      });
+      cameraStream
+        .getTracks()
+        .forEach(function(track) {
+          track.stop();
+        });
     }
 
     cameraStream = null;
   }
 }
 
-window.addEventListener("load", function() {
-  startCamera();
-});
+window.addEventListener(
+  "load",
+  function() {
+    startCamera();
+  }
+);
 
-// 10. PROSES KAMERA
+// =======================================
+// 13. PROSES KAMERA
+// =======================================
 
 async function trackFrame() {
   if (!tracking) return;
 
-  if (!processing && video.readyState >= 2) {
+  if (
+    !processing &&
+    video.readyState >= 2
+  ) {
     processing = true;
 
     try {
-      await hands.send({ image: video });
+      await hands.send({
+        image: video
+      });
     } catch (error) {
       statusEl.textContent =
-        "Ralat hand tracking: " + error.message;
+        "Ralat hand tracking: " +
+        error.message;
+
       tracking = false;
     } finally {
       processing = false;
@@ -955,10 +1382,13 @@ async function trackFrame() {
   }
 }
 
-// 11. KESAN TANGAN DAN CUBITAN
+// =======================================
+// 14. KESAN TANGAN DAN CUBITAN
+// =======================================
 
 function onHandResults(results) {
-  const landmarks = results.multiHandLandmarks?.[0];
+  const landmarks =
+    results.multiHandLandmarks?.[0];
 
   if (!landmarks) {
     cursorEl.style.display = "none";
@@ -974,24 +1404,41 @@ function onHandResults(results) {
   const indexTip = landmarks[8];
   const thumbTip = landmarks[4];
 
-  const rect = gameEl.getBoundingClientRect();
+  const rect =
+    gameEl.getBoundingClientRect();
 
-  const videoWidth = video.videoWidth || 640;
-  const videoHeight = video.videoHeight || 480;
+  const videoWidth =
+    video.videoWidth || 640;
+
+  const videoHeight =
+    video.videoHeight || 480;
 
   const scale = Math.max(
     rect.width / videoWidth,
     rect.height / videoHeight
   );
 
-  const displayedWidth = videoWidth * scale;
-  const displayedHeight = videoHeight * scale;
+  const displayedWidth =
+    videoWidth * scale;
 
-  const cropX = (displayedWidth - rect.width) / 2;
-  const cropY = (displayedHeight - rect.height) / 2;
+  const displayedHeight =
+    videoHeight * scale;
 
-  handX = (1 - indexTip.x) * displayedWidth - cropX;
-  handY = indexTip.y * displayedHeight - cropY;
+  const cropX =
+    (displayedWidth - rect.width) / 2;
+
+  const cropY =
+    (displayedHeight - rect.height) / 2;
+
+  handX =
+    (1 - indexTip.x) *
+    displayedWidth -
+    cropX;
+
+  handY =
+    indexTip.y *
+    displayedHeight -
+    cropY;
 
   cursorEl.style.display = "block";
   cursorEl.style.left = handX + "px";
@@ -1002,7 +1449,8 @@ function onHandResults(results) {
     indexTip.y - thumbTip.y
   );
 
-  const isPinching = distance < 0.09;
+  const isPinching =
+    distance < 0.09;
 
   cursorEl.classList.toggle(
     "pinching",
@@ -1014,9 +1462,13 @@ function onHandResults(results) {
     return;
   }
 
-  if (isPinching && !previousPinch) {
+  if (
+    isPinching &&
+    !previousPinch
+  ) {
     if (!dragMode) {
-      const card = getCardAt(handX, handY);
+      const card =
+        getCardAt(handX, handY);
 
       if (card) {
         beginDragging(
@@ -1029,20 +1481,32 @@ function onHandResults(results) {
     }
   }
 
-  if (isPinching && dragMode === "hand") {
+  if (
+    isPinching &&
+    dragMode === "hand"
+  ) {
     moveDragging(handX, handY);
   }
 
-  if (!isPinching && previousPinch) {
+  if (
+    !isPinching &&
+    previousPinch
+  ) {
     if (dragMode === "hand") {
-      finishDragging(handX, handY, false);
+      finishDragging(
+        handX,
+        handY,
+        false
+      );
     }
   }
 
   previousPinch = isPinching;
 }
 
-// 12. KESAN BUNYI
+// =======================================
+// 15. KESAN BUNYI
+// =======================================
 
 let audioContext = null;
 
@@ -1052,10 +1516,13 @@ function getAudioContext() {
       window.AudioContext ||
       window.webkitAudioContext;
 
-    audioContext = new AudioClass();
+    audioContext =
+      new AudioClass();
   }
 
-  if (audioContext.state === "suspended") {
+  if (
+    audioContext.state === "suspended"
+  ) {
     audioContext.resume();
   }
 
@@ -1070,15 +1537,23 @@ function playSound(
   try {
     const ctx = getAudioContext();
 
-    const oscillator = ctx.createOscillator();
-    const gain = ctx.createGain();
+    const oscillator =
+      ctx.createOscillator();
+
+    const gain =
+      ctx.createGain();
 
     oscillator.type = "sine";
-    oscillator.frequency.value = frequency;
+    oscillator.frequency.value =
+      frequency;
 
-    const now = ctx.currentTime;
+    const now =
+      ctx.currentTime;
 
-    gain.gain.setValueAtTime(volume, now);
+    gain.gain.setValueAtTime(
+      volume,
+      now
+    );
 
     gain.gain.exponentialRampToValueAtTime(
       0.001,
@@ -1089,25 +1564,39 @@ function playSound(
     gain.connect(ctx.destination);
 
     oscillator.start(now);
-    oscillator.stop(now + duration);
+    oscillator.stop(
+      now + duration
+    );
 
   } catch (error) {
-    console.log("Audio tidak tersedia:", error);
+    console.log(
+      "Audio tidak tersedia:",
+      error
+    );
   }
 }
 
-// 13. TUTUP KAMERA
+// =======================================
+// 16. TUTUP KAMERA
+// =======================================
 
-window.addEventListener("pagehide", function() {
-  tracking = false;
-  clearTimeout(nextQuestionTimer);
+window.addEventListener(
+  "pagehide",
+  function() {
+    tracking = false;
 
-  if (cameraStream) {
-    cameraStream.getTracks().forEach(function(track) {
-      track.stop();
-    });
+    clearTimeout(nextQuestionTimer);
+    clearTimeout(feedbackTimer);
+
+    if (cameraStream) {
+      cameraStream
+        .getTracks()
+        .forEach(function(track) {
+          track.stop();
+        });
+    }
   }
-});
+);
 </script>
 
 </body>
