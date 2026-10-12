@@ -5,23 +5,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zon 2: Rima Rimba AR</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
   font-family: "Trebuchet MS", Arial, sans-serif;
-  background: linear-gradient(#b7f0ff, #e4ffd4);
   color: #24513b;
+  background: linear-gradient(#b7f0ff, #e4ffd4);
 }
 
 header {
-  background: linear-gradient(120deg, #13834b, #6bc64b);
-  color: white;
-  text-align: center;
   padding: 20px;
+  text-align: center;
+  color: white;
+  background: linear-gradient(120deg, #13834b, #6bc64b);
   border-bottom: 7px solid #ffda6c;
 }
 
@@ -37,19 +40,20 @@ header h1 {
 }
 
 .intro {
-  background: #fff8d9;
-  border: 3px solid #ffd568;
-  border-radius: 18px;
+  margin-bottom: 15px;
   padding: 13px;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 15px;
+  background: #fff8d9;
+  border: 3px solid #ffd568;
+  border-radius: 18px;
 }
 
 .game {
   position: relative;
-  height: 610px;
+  height: 630px;
   overflow: hidden;
+  isolation: isolate;
   border: 7px solid white;
   border-radius: 25px;
   background: linear-gradient(
@@ -59,7 +63,6 @@ header h1 {
     #4bb05a 100%
   );
   box-shadow: 0 8px 22px #285b3b40;
-  isolation: isolate;
 }
 
 .sun {
@@ -79,8 +82,15 @@ header h1 {
   pointer-events: none;
 }
 
-.cloud.one { top: 10px; left: 5%; }
-.cloud.two { top: 40px; right: 18%; }
+.cloud.one {
+  top: 10px;
+  left: 5%;
+}
+
+.cloud.two {
+  top: 40px;
+  right: 18%;
+}
 
 .tree {
   position: absolute;
@@ -111,7 +121,10 @@ header h1 {
 }
 
 .animal.left { left: 4%; }
-.animal.right { right: 5%; animation-delay: 1s; }
+.animal.right {
+  right: 5%;
+  animation-delay: 1s;
+}
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
@@ -130,7 +143,9 @@ header h1 {
   pointer-events: none;
 }
 
-#camera.active { opacity: .5; }
+#camera.active {
+  opacity: .5;
+}
 
 .overlay {
   position: absolute;
@@ -144,30 +159,31 @@ header h1 {
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 3;
   width: min(94%, 800px);
-  background: #fffdf0f5;
-  border: 4px solid #f7d36c;
-  border-radius: 20px;
   padding: 16px 12px;
   text-align: center;
   font-size: clamp(19px, 2.6vw, 25px);
   font-weight: bold;
   line-height: 1.55;
+  background: #fffdf0f5;
+  border: 4px solid #f7d36c;
+  border-radius: 20px;
   box-shadow: 0 5px 12px #0002;
-  z-index: 3;
 }
 
 .question-title {
-  color: #16854a;
-  font-size: 19px;
   margin-bottom: 6px;
+  color: #16854a;
+  font-size: clamp(22px, 3vw, 29px);
 }
 
 .answer-zone {
   position: absolute;
-  top: 59%;
+  top: 58%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 4;
   width: min(65%, 340px);
   min-height: 85px;
   display: flex;
@@ -175,14 +191,13 @@ header h1 {
   justify-content: center;
   padding: 13px;
   text-align: center;
-  background: #197647ed;
   color: white;
+  background: #197647ed;
   border: 4px dashed white;
   border-radius: 20px;
   font-size: 19px;
   font-weight: bold;
   box-shadow: 0 5px 12px #0003;
-  z-index: 4;
 }
 
 .answer-zone.hover {
@@ -201,50 +216,57 @@ header h1 {
 }
 
 @keyframes shake {
-  0%,100% { margin-left: 0; }
+  0%, 100% { margin-left: 0; }
   25% { margin-left: -9px; }
   75% { margin-left: 9px; }
 }
 
 .action {
-  background: #268e54;
+  margin: 5px;
+  padding: 13px 18px;
   color: white;
+  background: #268e54;
   border: none;
   border-radius: 13px;
-  padding: 13px 18px;
-  margin: 5px;
   font-size: 15px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.action:hover { background: #1b6f42; }
+.action:hover {
+  background: #1b6f42;
+}
 
 #startBtn {
   pointer-events: auto;
-  background: #ffdf70;
-  color: #24513b;
-  font-size: 22px;
   padding: 16px 26px;
+  color: #24513b;
+  background: #ffdf70;
+  font-size: 22px;
 }
 
-#startBtn:hover { background: #ffe995; }
+#startBtn:hover {
+  background: #ffe995;
+}
 
 /* KAWASAN KUMBANG TERBANG */
+
 .cards {
   position: absolute;
   left: 3%;
   right: 3%;
-  bottom: 12px;
-  height: 180px;
+  bottom: 10px;
   z-index: 6;
+  height: 200px;
   pointer-events: none;
 }
 
+/* KUMBANG KAWAII */
+
 .bug-card {
   position: absolute;
-  width: clamp(94px, 15vw, 150px);
-  height: 105px;
+  width: 132px;
+  height: 124px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -253,130 +275,78 @@ header h1 {
   user-select: none;
   -webkit-user-select: none;
   pointer-events: auto;
+  filter: drop-shadow(0 6px 5px #0003);
   will-change: left, top;
-  filter: drop-shadow(0 5px 4px #0004);
 }
 
 .bug-card:focus-visible {
-  outline: 4px solid #fff;
+  outline: 4px solid white;
   border-radius: 20px;
 }
 
 .bug-card.selected {
-  filter: drop-shadow(0 0 12px #ffe66a);
   cursor: grabbing;
+  filter: drop-shadow(0 0 12px #ffe66a);
 }
 
 .bug-card:disabled {
   opacity: .65;
 }
 
-.bug-body {
+/* SVG kumbang */
+.bug-picture {
   position: absolute;
-  width: 72px;
-  height: 65px;
+  top: 0;
   left: 50%;
-  top: 5px;
+  width: 108px;
+  height: 95px;
   transform: translateX(-50%);
-  background: #62452b;
-  border-radius: 45% 45% 50% 50%;
-  border: 3px solid #49301b;
+  overflow: visible;
 }
 
-.bug-head {
-  position: absolute;
-  width: 38px;
-  height: 33px;
-  background: #62452b;
-  border-radius: 50%;
-  left: 50%;
-  top: -11px;
-  transform: translateX(-50%);
+.bug-wing-left {
+  transform-origin: 47px 39px;
+  animation: wingLeft .28s ease-in-out infinite alternate;
 }
 
-.bug-eye {
-  position: absolute;
-  top: 9px;
-  width: 7px;
-  height: 8px;
-  border-radius: 50%;
-  background: white;
+.bug-wing-right {
+  transform-origin: 61px 39px;
+  animation: wingRight .28s ease-in-out infinite alternate;
 }
 
-.bug-eye.left { left: 8px; }
-.bug-eye.right { right: 8px; }
-
-.bug-wing {
-  position: absolute;
-  top: 17px;
-  width: 31px;
-  height: 39px;
-  border: 2px solid #54301f;
-  background: var(--bug-color, #f26b54);
-  border-radius: 50% 50% 40% 40%;
-  transform-origin: top center;
-  animation: flap .38s ease-in-out infinite alternate;
+@keyframes wingLeft {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(-23deg); }
 }
 
-.bug-wing.left {
-  left: 3px;
-  transform: rotate(-15deg);
-}
-
-.bug-wing.right {
-  right: 3px;
-  transform: rotate(15deg);
-  animation-delay: -.19s;
-}
-
-.bug-spot {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  background: #503126;
-  border-radius: 50%;
-  top: 13px;
-  left: 10px;
-}
-
-@keyframes flap {
-  from { scale: 1 1; }
-  to { scale: .78 1; }
+@keyframes wingRight {
+  from { transform: rotate(6deg); }
+  to { transform: rotate(23deg); }
 }
 
 .bug-label {
   position: absolute;
-  bottom: 0;
   left: 50%;
+  bottom: 0;
   transform: translateX(-50%);
-  background: #fff1ad;
+  min-width: 100px;
+  max-width: 132px;
+  padding: 7px 9px;
+  text-align: center;
   color: #503819;
+  background: #fff1ad;
   border: 3px solid white;
   border-radius: 13px;
-  padding: 7px 8px;
-  min-width: 90%;
-  max-width: 100%;
-  text-align: center;
-  font-size: clamp(13px, 1.6vw, 17px);
+  font-size: 16px;
   font-weight: bold;
   overflow-wrap: anywhere;
   box-shadow: 0 3px 0 #cda541;
 }
 
-.drag-ghost {
-  position: absolute;
-  z-index: 90;
-  padding: 12px 18px;
-  background: #ffdf70;
-  border: 4px solid white;
-  border-radius: 17px;
-  color: #603c17;
-  font-size: 20px;
-  font-weight: bold;
-  box-shadow: 0 6px 18px #0005;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  white-space: nowrap;
+/* Kumbang sebenar bergerak bersama tangan */
+.bug-card.captured {
+  z-index: 80;
+  filter: drop-shadow(0 0 13px #ffe66a);
 }
 
 .cursor {
@@ -430,56 +400,54 @@ header h1 {
 }
 
 .panel {
-  background: white;
-  border-radius: 20px;
   margin-top: 15px;
   padding: 16px;
   text-align: center;
+  background: white;
+  border-radius: 20px;
   box-shadow: 0 4px 14px #0001;
-}
-
-.progress {
-  color: #21804b;
-  font-size: 20px;
-  font-weight: bold;
 }
 
 #message {
   min-height: 28px;
+  margin: 12px 0;
   font-size: 19px;
   font-weight: bold;
-  margin: 12px 0;
 }
 
 #status {
-  font-size: 14px;
   color: #59695d;
+  font-size: 14px;
   line-height: 1.5;
 }
 
 .instructions {
+  margin-top: 15px;
+  padding: 15px;
   background: #fff9df;
   border-radius: 15px;
-  padding: 15px;
-  margin-top: 15px;
   line-height: 1.7;
 }
 
-.instructions[hidden] { display: none; }
-
-.help-button {
-  background: #f5b638;
-  color: #483814;
+.instructions[hidden] {
+  display: none;
 }
 
-.help-button:hover { background: #e6a523; }
+.help-button {
+  color: #483814;
+  background: #f5b638;
+}
+
+.help-button:hover {
+  background: #e6a523;
+}
 
 .game.finished .question {
   top: 31%;
   width: min(90%, 650px);
   padding: 28px 18px;
-  border: 5px solid #ffd568;
   background: #fffdf0;
+  border: 5px solid #ffd568;
   font-size: clamp(20px, 3vw, 28px);
   line-height: 1.8;
   box-shadow: 0 8px 25px #0003;
@@ -490,9 +458,9 @@ header h1 {
 }
 
 .finish-title {
+  margin-bottom: 10px;
   color: #16854a;
   font-size: clamp(32px, 5vw, 48px);
-  margin-bottom: 10px;
 }
 
 .game.finished .answer-zone,
@@ -501,7 +469,7 @@ header h1 {
 }
 
 @media (max-width: 600px) {
-  .game { height: 650px; }
+  .game { height: 670px; }
   .tree { font-size: 65px; }
   .animal { font-size: 42px; }
 
@@ -513,24 +481,37 @@ header h1 {
   }
 
   .answer-zone {
-    top: 58%;
+    top: 57%;
     width: 76%;
   }
 
   .cards {
-    height: 190px;
-    bottom: 10px;
+    height: 205px;
+    bottom: 8px;
   }
 
   .bug-card {
-    width: 100px;
-    height: 105px;
+    width: 105px;
+    height: 118px;
+  }
+
+  .bug-picture {
+    width: 90px;
+    height: 85px;
+  }
+
+  .bug-label {
+    min-width: 92px;
+    max-width: 105px;
+    font-size: 13px;
+    padding: 6px 4px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animal,
-  .bug-wing {
+  .bug-wing-left,
+  .bug-wing-right {
     animation: none;
   }
 }
@@ -544,11 +525,13 @@ header h1 {
 </header>
 
 <div class="container">
+
   <div class="intro">
     🌟 Misi Kumbang: Lengkapkan pantun dengan perkataan yang betul!
   </div>
 
   <div class="game" id="game">
+
     <div class="sun"></div>
     <div class="cloud one">☁️</div>
     <div class="cloud two">☁️</div>
@@ -561,6 +544,7 @@ header h1 {
     <video id="camera" autoplay muted playsinline></video>
 
     <div class="overlay">
+
       <div class="question" id="question">
         🌿 Bersedia untuk melengkapkan pantun?
         Tekan butang Mula Bermain!
@@ -575,11 +559,11 @@ header h1 {
       <div class="cards" id="cards"></div>
       <div class="cursor" id="cursor"></div>
       <div class="stars-layer" id="starsLayer"></div>
+
     </div>
   </div>
 
   <div class="panel">
-    <div class="progress" id="progress">Misi 0 / 5</div>
 
     <p id="message" aria-live="polite"></p>
 
@@ -596,10 +580,13 @@ header h1 {
     <p id="status" aria-live="polite">
       📷 Kamera AR sedang disediakan secara automatik...
     </p>
+
   </div>
 
   <div class="instructions" id="instructions" hidden>
+
     <strong>🌿 Cara Bermain:</strong>
+
     <p>
       1. Tekan butang <strong>Mula Bermain</strong>.<br>
       2. Baca pantun dengan teliti.<br>
@@ -609,6 +596,7 @@ header h1 {
     </p>
 
     <strong>🖐️ Kamera AR:</strong>
+
     <p>
       Halakan jari telunjuk pada kumbang.
       Cubit ibu jari dan jari telunjuk untuk menangkapnya.
@@ -616,19 +604,22 @@ header h1 {
     </p>
 
     <strong>🖱️ Tetikus atau Sentuhan:</strong>
+
     <p>
       Klik dan tahan kumbang, seret ke petak hijau,
       kemudian lepaskan.
       Murid juga boleh klik kumbang untuk memilih jawapan.
     </p>
+
   </div>
+
 </div>
 
 <script>
 "use strict";
 
 // =======================================
-// 1. SOALAN PANTUN ASAL
+// 1. LIMA SOALAN PANTUN ASAL
 // =======================================
 
 const questions = [
@@ -694,7 +685,6 @@ const questionEl = document.getElementById("question");
 const cardsEl = document.getElementById("cards");
 const targetEl = document.getElementById("target");
 const cursorEl = document.getElementById("cursor");
-const progressEl = document.getElementById("progress");
 const messageEl = document.getElementById("message");
 const statusEl = document.getElementById("status");
 const startBtn = document.getElementById("startBtn");
@@ -703,7 +693,7 @@ const instructionsEl = document.getElementById("instructions");
 const starsLayer = document.getElementById("starsLayer");
 
 // =======================================
-// 3. KEADAAN PERMAINAN
+// 3. PEMBOLEH UBAH
 // =======================================
 
 let currentQuestion = 0;
@@ -712,12 +702,15 @@ let started = false;
 let answered = false;
 
 let selectedCard = null;
-let ghost = null;
 let dragMode = null;
 let activePointerId = null;
 let pointerStartX = 0;
 let pointerStartY = 0;
 let pointerMoved = false;
+
+// Kedudukan kumbang ketika ditangkap.
+let dragOffsetX = 0;
+let dragOffsetY = 0;
 
 let hands = null;
 let cameraStream = null;
@@ -730,15 +723,13 @@ let handY = 0;
 let nextQuestionTimer = null;
 let feedbackTimer = null;
 
-// Kumbang bergerak bebas dalam kawasan bawah.
 let flyingBugs = [];
 let lastAnimationTime = 0;
-let lastFrame = 0;
 
 const BUG_COLORS = [
-  "#f26b54",
-  "#72bff0",
-  "#94d86d"
+  "#f46d79",
+  "#77bdf2",
+  "#a0d875"
 ];
 
 // =======================================
@@ -747,6 +738,7 @@ const BUG_COLORS = [
 
 helpBtn.addEventListener("click", function() {
   const opening = instructionsEl.hidden;
+
   instructionsEl.hidden = !opening;
 
   helpBtn.setAttribute(
@@ -768,6 +760,7 @@ function shuffleChoices(choices) {
 
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
+
     [result[i], result[j]] = [result[j], result[i]];
   }
 
@@ -809,18 +802,27 @@ function showQuestion() {
   answered = false;
   previousPinch = false;
 
-  targetEl.classList.remove("wrong", "correct", "hover");
-  targetEl.textContent = "🎯 Letakkan jawapan di sini";
+  targetEl.classList.remove(
+    "wrong",
+    "correct",
+    "hover"
+  );
+
+  targetEl.textContent =
+    "🎯 Letakkan jawapan di sini";
+
   messageEl.textContent = "";
 
   const q = questions[currentQuestion];
 
-  progressEl.textContent =
-    "Misi " + (currentQuestion + 1) +
-    " / " + questions.length;
-
+  // Tajuk baharu: Misi 1/5, Misi 2/5 dan seterusnya.
   questionEl.innerHTML =
-    '<div class="question-title">🪲 Lengkapkan Pantun!</div>' +
+    '<div class="question-title">' +
+      '🐞 Misi ' +
+      (currentQuestion + 1) +
+      '/' +
+      questions.length +
+    '</div>' +
     q.lines.map(escapeHTML).join("<br>");
 
   cardsEl.innerHTML = "";
@@ -843,14 +845,11 @@ function showQuestion() {
     });
   });
 
-  // Tunggu susun atur kad siap sebelum menetapkan lokasi.
-  requestAnimationFrame(function() {
-    initializeBugPositions();
-  });
+  requestAnimationFrame(initializeBugPositions);
 }
 
 // =======================================
-// 7. REKA BENTUK KUMBANG
+// 7. HASILKAN KUMBANG KAWAII
 // =======================================
 
 function createBugCard(choice, index) {
@@ -859,32 +858,125 @@ function createBugCard(choice, index) {
   card.type = "button";
   card.className = "bug-card";
   card.dataset.answer = choice;
+
   card.setAttribute(
     "aria-label",
     "Kumbang membawa perkataan " + choice
   );
 
-  card.style.setProperty(
-    "--bug-color",
-    BUG_COLORS[index % BUG_COLORS.length]
-  );
+  const color = BUG_COLORS[index % BUG_COLORS.length];
 
-  card.innerHTML =
-    '<span class="bug-body">' +
-      '<span class="bug-head">' +
-        '<span class="bug-eye left"></span>' +
-        '<span class="bug-eye right"></span>' +
-      '</span>' +
-      '<span class="bug-wing left">' +
-        '<span class="bug-spot"></span>' +
-      '</span>' +
-      '<span class="bug-wing right">' +
-        '<span class="bug-spot"></span>' +
-      '</span>' +
-    '</span>' +
-    '<span class="bug-label">' +
-      escapeHTML(choice) +
-    '</span>';
+  card.innerHTML = `
+    <svg
+      class="bug-picture"
+      viewBox="0 0 120 110"
+      aria-hidden="true"
+    >
+      <!-- Sesungut -->
+      <path
+        d="M49 29 Q40 13 34 17"
+        fill="none"
+        stroke="#65432d"
+        stroke-width="4"
+        stroke-linecap="round"
+      />
+      <path
+        d="M71 29 Q80 13 86 17"
+        fill="none"
+        stroke="#65432d"
+        stroke-width="4"
+        stroke-linecap="round"
+      />
+      <circle cx="34" cy="17" r="5" fill="#ffb8c8"/>
+      <circle cx="86" cy="17" r="5" fill="#ffb8c8"/>
+
+      <!-- Kaki -->
+      <path
+        d="M38 76 L25 85 M48 83 L43 95
+           M82 76 L95 85 M72 83 L77 95"
+        fill="none"
+        stroke="#65432d"
+        stroke-width="5"
+        stroke-linecap="round"
+      />
+
+      <!-- Sayap kiri -->
+      <g class="bug-wing-left">
+        <ellipse
+          cx="37"
+          cy="59"
+          rx="26"
+          ry="31"
+          fill="${color}"
+          stroke="#7c4b44"
+          stroke-width="3"
+        />
+        <circle cx="29" cy="51" r="5" fill="#fff5f5"/>
+        <circle cx="44" cy="67" r="5" fill="#fff5f5"/>
+      </g>
+
+      <!-- Sayap kanan -->
+      <g class="bug-wing-right">
+        <ellipse
+          cx="83"
+          cy="59"
+          rx="26"
+          ry="31"
+          fill="${color}"
+          stroke="#7c4b44"
+          stroke-width="3"
+        />
+        <circle cx="91" cy="51" r="5" fill="#fff5f5"/>
+        <circle cx="76" cy="67" r="5" fill="#fff5f5"/>
+      </g>
+
+      <!-- Badan -->
+      <ellipse
+        cx="60"
+        cy="61"
+        rx="27"
+        ry="33"
+        fill="#ffe4a9"
+        stroke="#8d6141"
+        stroke-width="3"
+      />
+
+      <!-- Kepala -->
+      <ellipse
+        cx="60"
+        cy="38"
+        rx="32"
+        ry="28"
+        fill="#fff0c8"
+        stroke="#8d6141"
+        stroke-width="3"
+      />
+
+      <!-- Mata kawaii -->
+      <ellipse cx="48" cy="39" rx="7" ry="10" fill="#3b302c"/>
+      <ellipse cx="72" cy="39" rx="7" ry="10" fill="#3b302c"/>
+      <circle cx="50" cy="35" r="3" fill="white"/>
+      <circle cx="74" cy="35" r="3" fill="white"/>
+
+      <!-- Pipi merah -->
+      <ellipse cx="37" cy="51" rx="8" ry="5" fill="#ff9eab"/>
+      <ellipse cx="83" cy="51" rx="8" ry="5" fill="#ff9eab"/>
+
+      <!-- Senyuman -->
+      <path
+        d="M54 53 Q60 61 66 53"
+        fill="none"
+        stroke="#80513c"
+        stroke-width="3"
+        stroke-linecap="round"
+      />
+
+      <!-- Kilauan -->
+      <circle cx="44" cy="24" r="4" fill="white" opacity=".6"/>
+    </svg>
+
+    <span class="bug-label">${escapeHTML(choice)}</span>
+  `;
 
   card.addEventListener("pointerdown", function(event) {
     if (!started || answered || dragMode) return;
@@ -918,7 +1010,7 @@ function createBugCard(choice, index) {
 }
 
 // =======================================
-// 8. KEDUDUKAN DAN PERGERAKAN KUMBANG
+// 8. KEDUDUKAN AWAL KUMBANG
 // =======================================
 
 function initializeBugPositions() {
@@ -960,6 +1052,16 @@ function renderBug(bug) {
   bug.element.style.top = bug.y + "px";
 }
 
+function findBug(card) {
+  return flyingBugs.find(function(bug) {
+    return bug.element === card;
+  });
+}
+
+// =======================================
+// 9. KUMBANG TERBANG BEBAS
+// =======================================
+
 function animateBugs(timestamp) {
   if (!lastAnimationTime) {
     lastAnimationTime = timestamp;
@@ -989,13 +1091,11 @@ function animateBugs(timestamp) {
         areaHeight - bug.element.offsetHeight
       );
 
-      // Tukar arah secara beransur-ansur.
       bug.phase += dt * 1.7;
 
       bug.vx += Math.sin(bug.phase) * dt * 7;
       bug.vy += Math.cos(bug.phase * 1.3) * dt * 7;
 
-      // Hadkan kelajuan agar masih boleh ditangkap.
       const speed = Math.hypot(bug.vx, bug.vy);
 
       if (speed > 40) {
@@ -1031,14 +1131,8 @@ function animateBugs(timestamp) {
 
 requestAnimationFrame(animateBugs);
 
-function findBug(card) {
-  return flyingBugs.find(function(bug) {
-    return bug.element === card;
-  });
-}
-
 // =======================================
-// 9. TANGKAP DAN SERET KUMBANG
+// 10. TANGKAP KUMBANG SEBENAR
 // =======================================
 
 function beginDragging(card, x, y, mode) {
@@ -1049,26 +1143,47 @@ function beginDragging(card, x, y, mode) {
   selectedCard = card;
   dragMode = mode;
 
-  card.classList.add("selected");
-
   const bug = findBug(card);
   if (bug) bug.paused = true;
 
-  ghost = document.createElement("div");
-  ghost.className = "drag-ghost";
-  ghost.textContent = "🐞 " + card.dataset.answer;
+  const gameRect = gameEl.getBoundingClientRect();
+  const cardRect = card.getBoundingClientRect();
 
-  gameEl.appendChild(ghost);
+  // Simpan jarak antara titik tangkapan
+  // dengan sudut kiri atas kumbang.
+  dragOffsetX =
+    x - (cardRect.left - gameRect.left);
+
+  dragOffsetY =
+    y - (cardRect.top - gameRect.top);
+
+  // Pindahkan elemen kumbang yang sama
+  // ke lapisan permainan supaya boleh
+  // dibawa ke petak jawapan.
+  const left = cardRect.left - gameRect.left;
+  const top = cardRect.top - gameRect.top;
+
+  gameEl.appendChild(card);
+
+  card.style.left = left + "px";
+  card.style.top = top + "px";
+
+  card.classList.add("selected", "captured");
+
   moveDragging(x, y);
 
   return true;
 }
 
 function moveDragging(x, y) {
-  if (!ghost) return;
+  if (!selectedCard) return;
 
-  ghost.style.left = x + "px";
-  ghost.style.top = y + "px";
+  // Seluruh kumbang ikut tangan/tetikus.
+  const left = x - dragOffsetX;
+  const top = y - dragOffsetY;
+
+  selectedCard.style.left = left + "px";
+  selectedCard.style.top = top + "px";
 
   targetEl.classList.toggle(
     "hover",
@@ -1100,16 +1215,25 @@ function finishDragging(x, y, allowClick) {
 
 function stopDragging() {
   if (selectedCard) {
-    selectedCard.classList.remove("selected");
+    const card = selectedCard;
+    const bug = findBug(card);
 
-    const bug = findBug(selectedCard);
-    if (bug) bug.paused = false;
+    card.classList.remove(
+      "selected",
+      "captured"
+    );
+
+    // Kembalikan kumbang ke kawasan
+    // terbang jika dilepaskan.
+    cardsEl.appendChild(card);
+
+    if (bug) {
+      bug.paused = false;
+      renderBug(bug);
+    }
   }
 
-  if (ghost) ghost.remove();
-
   selectedCard = null;
-  ghost = null;
   dragMode = null;
   activePointerId = null;
   pointerMoved = false;
@@ -1150,7 +1274,7 @@ function getCardAt(x, y) {
 }
 
 // =======================================
-// 10. TETIKUS DAN SENTUHAN
+// 11. TETIKUS DAN SENTUHAN
 // =======================================
 
 window.addEventListener("pointermove", function(event) {
@@ -1197,7 +1321,7 @@ window.addEventListener("pointercancel", function(event) {
 });
 
 // =======================================
-// 11. ANIMASI BINTANG
+// 12. ANIMASI BINTANG
 // =======================================
 
 function showStars() {
@@ -1253,7 +1377,7 @@ function showStars() {
 }
 
 // =======================================
-// 12. SEMAK JAWAPAN
+// 13. SEMAK JAWAPAN
 // =======================================
 
 function checkAnswer(choice) {
@@ -1261,7 +1385,10 @@ function checkAnswer(choice) {
 
   clearTimeout(feedbackTimer);
 
-  targetEl.classList.remove("wrong", "correct");
+  targetEl.classList.remove(
+    "wrong",
+    "correct"
+  );
 
   const correct = questions[currentQuestion].answer;
 
@@ -1319,7 +1446,7 @@ function checkAnswer(choice) {
 }
 
 // =======================================
-// 13. TAMAT PERMAINAN
+// 14. TAMAT PERMAINAN
 // =======================================
 
 function finishGame() {
@@ -1346,17 +1473,13 @@ function finishGame() {
   cardsEl.innerHTML = "";
   targetEl.textContent = "";
 
-  progressEl.textContent =
-    "Misi Selesai: " + score +
-    " / " + questions.length;
-
   messageEl.textContent =
     "🏆 Syabas! Semua misi berjaya diselesaikan.";
   messageEl.style.color = "#148448";
 }
 
 // =======================================
-// 14. KAMERA AR
+// 15. KAMERA AR
 // =======================================
 
 async function startCamera() {
@@ -1440,7 +1563,7 @@ async function startCamera() {
 window.addEventListener("load", startCamera);
 
 // =======================================
-// 15. PROSES KAMERA
+// 16. PROSES KAMERA
 // =======================================
 
 async function trackFrame() {
@@ -1466,7 +1589,7 @@ async function trackFrame() {
 }
 
 // =======================================
-// 16. KESAN TANGAN DAN CUBITAN
+// 17. KESAN TANGAN DAN CUBITAN
 // =======================================
 
 function onHandResults(results) {
@@ -1561,7 +1684,7 @@ function onHandResults(results) {
 }
 
 // =======================================
-// 17. KESAN BUNYI
+// 18. BUNYI
 // =======================================
 
 let audioContext = null;
@@ -1617,7 +1740,7 @@ function playSound(
 }
 
 // =======================================
-// 18. TUTUP KAMERA
+// 19. TUTUP KAMERA
 // =======================================
 
 window.addEventListener("pagehide", function() {
