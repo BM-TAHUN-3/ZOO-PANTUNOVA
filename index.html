@@ -208,92 +208,21 @@ header h1 {
   line-height: 1.6;
 }
 
-/* PETUNJUK RIMA:
-   HANYA MUNCUL JIKA JAWAPAN SALAH */
-
-.rhyme-box {
-  position: absolute;
-  top: 247px;
-  left: 14px;
-  z-index: 5;
-  width: 165px;
-  padding: 11px;
-  background: #fff9e9f8;
-  border: 3px solid #f4c765;
-  border-radius: 16px;
-  font-size: 13px;
-  box-shadow: 0 4px 12px #0003;
-  animation: hintAppear .3s ease-out;
-}
-
-.rhyme-box[hidden] {
-  display: none !important;
-}
-
-@keyframes hintAppear {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.rhyme-heading {
-  margin-bottom: 8px;
-  text-align: center;
-  font-weight: bold;
-  color: #97600c;
-}
-
-.rhyme-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 7px;
-  margin-bottom: 4px;
-  background: white;
-  border-radius: 8px;
-}
-
-.rhyme-letter {
-  min-width: 23px;
-  padding: 2px 5px;
-  text-align: center;
-  font-weight: bold;
-  color: white;
-  background: #4c9d62;
-  border-radius: 6px;
-}
-
-.rhyme-row:nth-of-type(3) .rhyme-letter,
-.rhyme-row:nth-of-type(5) .rhyme-letter {
-  background: #d99040;
-}
-
-.rhyme-note {
-  margin-top: 7px;
-  text-align: center;
-  font-size: 11px;
-  line-height: 1.4;
-}
-
-/* PETAK JAWAPAN */
+/* PETAK JAWAPAN DAN MAKLUM BALAS */
 
 .answer-zone {
   position: absolute;
   top: 61%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 4;
-  width: min(60%, 330px);
+  z-index: 10;
+  width: min(70%, 365px);
   min-height: 86px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   padding: 12px;
   text-align: center;
   color: white;
@@ -311,13 +240,20 @@ header h1 {
 }
 
 .answer-zone.wrong {
-  background: #d94b45;
+  width: min(82%, 380px);
+  min-height: 205px;
+  background: #b92430f5;
+  border: 4px solid #ffe1e1;
+  box-shadow: 0 0 22px #b9243080;
   animation: shake .35s ease-in-out;
 }
 
 .answer-zone.correct {
-  background: #19a65b;
-  border-style: solid;
+  width: min(80%, 370px);
+  min-height: 115px;
+  background: #168a4a;
+  border: 4px solid #d7ffe3;
+  box-shadow: 0 0 22px #3ad66b85;
 }
 
 @keyframes shake {
@@ -331,6 +267,63 @@ header h1 {
 
   75% {
     margin-left: 9px;
+  }
+}
+
+.feedback-heading {
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: bold;
+}
+
+.rhyme-title {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.rhyme-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.rhyme-explanation {
+  max-width: 310px;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.45;
+}
+
+.earned-stars {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 3px;
+  font-size: clamp(25px, 4vw, 35px);
+  line-height: 1.2;
+  filter: drop-shadow(0 2px 2px #0004);
+}
+
+.earned-star {
+  display: inline-block;
+  animation: starPop .4s ease-out both;
+}
+
+@keyframes starPop {
+  0% {
+    opacity: 0;
+    transform: scale(.2) rotate(-20deg);
+  }
+
+  70% {
+    transform: scale(1.3) rotate(8deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
   }
 }
 
@@ -485,7 +478,7 @@ header h1 {
   transform: translate(-50%, -50%) scale(.8);
 }
 
-/* BINTANG */
+/* ANIMASI BINTANG */
 
 .stars-layer {
   position: absolute;
@@ -567,13 +560,6 @@ header h1 {
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 14px #0001;
-}
-
-#message {
-  min-height: 28px;
-  margin: 12px 0;
-  font-size: 19px;
-  font-weight: bold;
 }
 
 #status {
@@ -693,8 +679,7 @@ header h1 {
 }
 
 .game.finished .answer-zone,
-.game.finished .cards,
-.game.finished .rhyme-box {
+.game.finished .cards {
   display: none;
 }
 
@@ -724,23 +709,37 @@ header h1 {
     font-size: 23px;
   }
 
-  .rhyme-box {
-    top: 265px;
-    left: 7px;
-    width: 130px;
-    padding: 7px;
-    font-size: 11px;
-  }
-
-  .rhyme-note {
-    font-size: 10px;
-  }
-
   .answer-zone {
-    top: 66%;
-    width: 70%;
+    top: 61%;
+    width: 75%;
     min-height: 78px;
     font-size: 16px;
+  }
+
+  .answer-zone.wrong {
+    width: 84%;
+    min-height: 200px;
+    padding: 10px;
+  }
+
+  .answer-zone.correct {
+    width: 84%;
+  }
+
+  .feedback-heading {
+    font-size: 19px;
+  }
+
+  .rhyme-title {
+    font-size: 15px;
+  }
+
+  .rhyme-lines {
+    font-size: 13px;
+  }
+
+  .rhyme-explanation {
+    font-size: 11px;
   }
 
   .cards {
@@ -776,14 +775,9 @@ header h1 {
     height: 740px;
   }
 
-  .rhyme-box {
-    top: 278px;
-    width: 118px;
-  }
-
-  .answer-zone {
-    top: 66%;
-    width: 74%;
+  .answer-zone.wrong {
+    width: 90%;
+    min-height: 195px;
   }
 
   .bug-card {
@@ -852,41 +846,6 @@ header h1 {
         Tekan butang Mula Bermain!
       </div>
 
-      <!-- PETUNJUK DISEMBUNYIKAN PADA AWALNYA -->
-
-      <div class="rhyme-box" id="rhymeBox" hidden>
-
-        <div class="rhyme-heading">
-          🌸 Ingat Rima a-b-a-b
-        </div>
-
-        <div class="rhyme-row">
-          <span>Baris 1</span>
-          <span class="rhyme-letter">a</span>
-        </div>
-
-        <div class="rhyme-row">
-          <span>Baris 2</span>
-          <span class="rhyme-letter">b</span>
-        </div>
-
-        <div class="rhyme-row">
-          <span>Baris 3</span>
-          <span class="rhyme-letter">a</span>
-        </div>
-
-        <div class="rhyme-row">
-          <span>Baris 4</span>
-          <span class="rhyme-letter">b</span>
-        </div>
-
-        <div class="rhyme-note">
-          Bunyi akhir baris 1 sama dengan baris 3.
-          Baris 2 sama dengan baris 4.
-        </div>
-
-      </div>
-
       <div class="answer-zone" id="target">
         <button
           class="action"
@@ -909,8 +868,6 @@ header h1 {
   </div>
 
   <div class="panel">
-
-    <p id="message" aria-live="polite"></p>
 
     <button
       class="action help-button"
@@ -937,9 +894,7 @@ header h1 {
       2. Baca pantun dengan teliti.<br>
       3. Cari kumbang yang membawa jawapan yang betul.<br>
       4. Tangkap kumbang dan bawa ke petak hijau.<br>
-      5. Jika jawapan salah, lihat peringatan rima
-      a-b-a-b dan cuba lagi.<br>
-      6. Lengkapkan kelima-lima misi untuk
+      5. Lengkapkan kelima-lima misi untuk
       mendapatkan lencana Wira Rima Rimba.
     </p>
 
@@ -1054,14 +1009,12 @@ const questionEl = document.getElementById("question");
 const cardsEl = document.getElementById("cards");
 const targetEl = document.getElementById("target");
 const cursorEl = document.getElementById("cursor");
-const messageEl = document.getElementById("message");
 const statusEl = document.getElementById("status");
 const startBtn = document.getElementById("startBtn");
 const helpBtn = document.getElementById("helpBtn");
 const instructionsEl = document.getElementById("instructions");
 const starsLayer = document.getElementById("starsLayer");
 const confettiLayer = document.getElementById("confettiLayer");
-const rhymeBox = document.getElementById("rhymeBox");
 
 // ==========================================
 // 3. PEMBOLEH UBAH
@@ -1165,8 +1118,6 @@ function startGame() {
   starsLayer.innerHTML = "";
   confettiLayer.innerHTML = "";
 
-  rhymeBox.hidden = true;
-
   showQuestion();
 }
 
@@ -1189,10 +1140,6 @@ function showQuestion() {
   answered = false;
   previousPinch = false;
 
-  // Petunjuk sentiasa disembunyikan
-  // apabila misi baharu bermula.
-  rhymeBox.hidden = true;
-
   targetEl.classList.remove(
     "wrong",
     "correct",
@@ -1201,8 +1148,6 @@ function showQuestion() {
 
   targetEl.textContent =
     "🎯 Letakkan jawapan di sini";
-
-  messageEl.textContent = "";
 
   const q = questions[currentQuestion];
 
@@ -1656,7 +1601,7 @@ function beginDragging(card, x, y, mode) {
   const top =
     cardRect.top - gameRect.top;
 
-  // Kumbang sebenar bergerak bersama tangan.
+  // Keseluruhan kumbang mengikut tangan.
   gameEl.appendChild(card);
 
   card.style.left = left + "px";
@@ -1886,7 +1831,26 @@ function showStars() {
 }
 
 // ==========================================
-// 14. SEMAK JAWAPAN
+// 14. BINTANG TERKUMPUL
+// ==========================================
+
+function getEarnedStars(count) {
+  let html = "";
+
+  for (let i = 0; i < count; i++) {
+    html += `
+      <span
+        class="earned-star"
+        style="animation-delay:${i * 0.12}s"
+      >⭐</span>
+    `;
+  }
+
+  return html;
+}
+
+// ==========================================
+// 15. SEMAK JAWAPAN
 // ==========================================
 
 function checkAnswer(choice) {
@@ -1898,7 +1862,8 @@ function checkAnswer(choice) {
 
   targetEl.classList.remove(
     "wrong",
-    "correct"
+    "correct",
+    "hover"
   );
 
   const correct = questions[currentQuestion].answer;
@@ -1908,17 +1873,22 @@ function checkAnswer(choice) {
     answered = true;
     score++;
 
-    // Jawapan betul:
-    // petunjuk terus disembunyikan.
-    rhymeBox.hidden = true;
+    // JAWAPAN BETUL:
+    // Petak hijau, ucapan syabas
+    // dan bintang terkumpul sahaja.
 
-    messageEl.textContent =
-      "🌟 Syabas! Jawapan anda betul!";
-
-    messageEl.style.color = "#148448";
-
-    targetEl.textContent = "✅ " + choice;
     targetEl.classList.add("correct");
+
+    targetEl.innerHTML = `
+      <div class="feedback-heading">
+        Syabas! Jawapan Betul!
+      </div>
+
+      <div class="earned-stars"
+           aria-label="${score} bintang terkumpul">
+        ${getEarnedStars(score)}
+      </div>
+    `;
 
     showStars();
     playSound(780);
@@ -1938,39 +1908,47 @@ function checkAnswer(choice) {
       } else {
         finishGame();
       }
-    }, 1700);
+    }, 2200);
 
   } else {
 
-    messageEl.textContent =
-      "❌ Jawapan belum tepat. Lihat peringatan rima dan cuba lagi!";
+    // JAWAPAN SALAH:
+    // Nota rima muncul di dalam
+    // petak jawapan berwarna merah.
 
-    messageEl.style.color = "#c73530";
-
-    targetEl.textContent = "❌ Cuba Lagi!";
-
-    void targetEl.offsetWidth;
     targetEl.classList.add("wrong");
 
-    // Jawapan salah:
-    // petunjuk rima baru muncul.
-    rhymeBox.hidden = false;
+    targetEl.innerHTML = `
+      <div class="feedback-heading">
+        Jawapan Salah! Cuba Lagi.
+      </div>
+
+      <div class="rhyme-title">
+        Ingat Rima Pantun a-b-a-b
+      </div>
+
+      <div class="rhyme-lines">
+        <div>Baris 1 — a</div>
+        <div>Baris 2 — b</div>
+        <div>Baris 3 — a</div>
+        <div>Baris 4 — b</div>
+      </div>
+
+      <div class="rhyme-explanation">
+        Bunyi akhir baris 1 sama dengan baris 3,
+        manakala baris 2 sama dengan baris 4.
+      </div>
+    `;
 
     playSound(250);
 
-    feedbackTimer = setTimeout(function() {
-      if (!answered && started) {
-        targetEl.classList.remove("wrong");
-
-        targetEl.textContent =
-          "🎯 Letakkan jawapan di sini";
-      }
-    }, 1100);
+    // Nota kekal kelihatan sehingga
+    // murid menjawab dengan betul.
   }
 }
 
 // ==========================================
-// 15. KONFETI
+// 16. KONFETI
 // ==========================================
 
 function showConfetti() {
@@ -2025,7 +2003,7 @@ function showConfetti() {
 }
 
 // ==========================================
-// 16. TAMAT PERMAINAN DAN LENCANA
+// 17. TAMAT PERMAINAN DAN LENCANA
 // ==========================================
 
 function finishGame() {
@@ -2036,7 +2014,6 @@ function finishGame() {
   flyingBugs = [];
 
   gameEl.classList.add("finished");
-  rhymeBox.hidden = true;
 
   questionEl.innerHTML = `
     <div class="finish-title">
@@ -2085,11 +2062,6 @@ function finishGame() {
   cardsEl.innerHTML = "";
   targetEl.textContent = "";
 
-  messageEl.textContent =
-    "🏆 Syabas! Semua misi berjaya diselesaikan.";
-
-  messageEl.style.color = "#148448";
-
   showConfetti();
 
   playSound(660);
@@ -2104,7 +2076,7 @@ function finishGame() {
 }
 
 // ==========================================
-// 17. KAMERA AR
+// 18. KAMERA AR
 // ==========================================
 
 async function startCamera() {
@@ -2190,7 +2162,7 @@ async function startCamera() {
 window.addEventListener("load", startCamera);
 
 // ==========================================
-// 18. PROSES KAMERA
+// 19. PROSES KAMERA
 // ==========================================
 
 async function trackFrame() {
@@ -2221,7 +2193,7 @@ async function trackFrame() {
 }
 
 // ==========================================
-// 19. KESAN TANGAN DAN CUBITAN
+// 20. KESAN TANGAN DAN CUBITAN
 // ==========================================
 
 function onHandResults(results) {
@@ -2320,7 +2292,7 @@ function onHandResults(results) {
 }
 
 // ==========================================
-// 20. BUNYI MAKLUM BALAS
+// 21. BUNYI KESAN RINGKAS
 // ==========================================
 
 function getAudioContext() {
@@ -2377,7 +2349,7 @@ function playSound(
 }
 
 // ==========================================
-// 21. TUTUP KAMERA
+// 22. TUTUP KAMERA
 // ==========================================
 
 window.addEventListener("pagehide", function() {
