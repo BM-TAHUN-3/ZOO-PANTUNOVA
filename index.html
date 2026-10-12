@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zoo Pantunova - Rima Rimba AR</title>
+<title>Rima Rimba AR</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 
@@ -29,11 +29,6 @@ header {
 header h1 {
   margin: 0;
   font-size: clamp(27px, 5vw, 42px);
-}
-
-header p {
-  margin: 8px 0 0;
-  font-size: 19px;
 }
 
 .container {
@@ -117,7 +112,10 @@ header p {
 }
 
 .animal.left { left: 4%; }
-.animal.right { right: 5%; animation-delay: 1s; }
+.animal.right {
+  right: 5%;
+  animation-delay: 1s;
+}
 
 @keyframes bounce {
   0%, 100% { transform: translateY(0); }
@@ -193,6 +191,16 @@ header p {
   color: #523a12;
   transform: translate(-50%, -50%) scale(1.05);
 }
+
+#startBtn {
+  pointer-events: auto;
+  background: #ffdf70;
+  color: #24513b;
+  font-size: 22px;
+  padding: 16px 26px;
+}
+
+#startBtn:hover { background: #ffe995; }
 
 .cards {
   position: absolute;
@@ -317,7 +325,6 @@ header p {
   line-height: 1.7;
 }
 
-/* Paparan tamat permainan */
 .game.finished .question {
   top: 35%;
   width: min(90%, 650px);
@@ -327,6 +334,10 @@ header p {
   font-size: clamp(20px, 3vw, 28px);
   line-height: 1.8;
   box-shadow: 0 8px 25px #0003;
+}
+
+.game.finished .question .action {
+  pointer-events: auto;
 }
 
 .finish-title {
@@ -357,8 +368,7 @@ header p {
 <body>
 
 <header>
-  <h1>🪲 ZOO PANTUNOVA 🌿</h1>
-  <p>Zon 2: Rima Rimba AR</p>
+  <h1>🌿 Zon 2: Rima Rimba AR 🪲</h1>
 </header>
 
 <div class="container">
@@ -383,11 +393,14 @@ header p {
     <div class="overlay">
 
       <div class="question" id="question">
-        Tekan Mula Permainan untuk memulakan misi!
+        🌿 Bersedia untuk melengkapkan pantun?
+        Tekan butang Mula Bermain!
       </div>
 
       <div class="answer-zone" id="target">
-        🎯 Letakkan jawapan di sini
+        <button class="action" id="startBtn" type="button">
+          ▶ Mula Bermain
+        </button>
       </div>
 
       <div class="cards" id="cards"></div>
@@ -401,10 +414,6 @@ header p {
     <div class="progress" id="progress">
       Misi 0 / 5
     </div>
-
-    <button class="action" id="startBtn">
-      ▶ Mula Permainan
-    </button>
 
     <p id="message" aria-live="polite"></p>
 
@@ -430,9 +439,8 @@ header p {
 <script>
 "use strict";
 
-// ====================================
 // 1. SOALAN PANTUN
-// ====================================
+// Jawapan betul dipelbagaikan: kiri, tengah dan kanan.
 
 const questions = [
   {
@@ -452,7 +460,7 @@ const questions = [
       "Taman negara tanahnya tinggi,",
       "Jadi kawasan tadahan _____."
     ],
-    choices: ["air", "hujan", "sungai"],
+    choices: ["hujan", "air", "sungai"],
     answer: "air"
   },
   {
@@ -462,7 +470,7 @@ const questions = [
       "Taman negara perlu _____,",
       "Kitaran alam kekal selamanya."
     ],
-    choices: ["dilindungi", "diterokai", "dimusnahkan"],
+    choices: ["diterokai", "dimusnahkan", "dilindungi"],
     answer: "dilindungi"
   },
   {
@@ -472,7 +480,7 @@ const questions = [
       "Hutan dijaga setiap _____,",
       "Supaya haiwan terus dilindungi."
     ],
-    choices: ["hari", "rumah", "batu"],
+    choices: ["rumah", "hari", "batu"],
     answer: "hari"
   },
   {
@@ -482,14 +490,12 @@ const questions = [
       "Taman negara banyak pokok,",
       "Hakisan tanah dapat _____."
     ],
-    choices: ["dihindari", "berlaku", "meningkat"],
+    choices: ["berlaku", "meningkat", "dihindari"],
     answer: "dihindari"
   }
 ];
 
-// ====================================
 // 2. ELEMEN PERMAINAN
-// ====================================
 
 const gameEl = document.getElementById("game");
 const video = document.getElementById("camera");
@@ -503,9 +509,7 @@ const messageEl = document.getElementById("message");
 const statusEl = document.getElementById("status");
 const startBtn = document.getElementById("startBtn");
 
-// ====================================
 // 3. PEMBOLEH UBAH
-// ====================================
 
 let currentQuestion = 0;
 let score = 0;
@@ -528,25 +532,24 @@ let previousPinch = false;
 
 let handX = 0;
 let handY = 0;
-
 let nextQuestionTimer = null;
 
-// ====================================
 // 4. MULA PERMAINAN
-// ====================================
 
-startBtn.addEventListener("click", function () {
+function startGame() {
   clearTimeout(nextQuestionTimer);
 
   currentQuestion = 0;
   score = 0;
   started = true;
+  answered = false;
 
   gameEl.classList.remove("finished");
-  startBtn.textContent = "🔄 Main Semula";
 
   showQuestion();
-});
+}
+
+startBtn.addEventListener("click", startGame);
 
 function showQuestion() {
   stopDragging();
@@ -571,7 +574,7 @@ function showQuestion() {
 
   cardsEl.innerHTML = "";
 
-  q.choices.forEach(function (choice) {
+  q.choices.forEach(function(choice) {
     const card = document.createElement("button");
 
     card.type = "button";
@@ -579,17 +582,13 @@ function showQuestion() {
     card.textContent = choice;
     card.dataset.answer = choice;
 
-    card.addEventListener("pointerdown", function (event) {
-      if (!started || answered || dragMode) {
-        return;
-      }
+    card.addEventListener("pointerdown", function(event) {
+      if (!started || answered || dragMode) return;
 
       if (
         event.pointerType === "mouse" &&
         event.button !== 0
-      ) {
-        return;
-      }
+      ) return;
 
       event.preventDefault();
 
@@ -622,14 +621,10 @@ function escapeHTML(value) {
     .replaceAll(">", "&gt;");
 }
 
-// ====================================
 // 5. SISTEM SERET KAD
-// ====================================
 
 function beginDragging(card, x, y, mode) {
-  if (!card || !started || answered) {
-    return false;
-  }
+  if (!card || !started || answered) return false;
 
   stopDragging();
 
@@ -728,11 +723,9 @@ function getCardAt(x, y) {
   return null;
 }
 
-// ====================================
 // 6. TETIKUS / SENTUHAN
-// ====================================
 
-window.addEventListener("pointermove", function (event) {
+window.addEventListener("pointermove", function(event) {
   if (dragMode !== "pointer") return;
   if (event.pointerId !== activePointerId) return;
 
@@ -753,7 +746,7 @@ window.addEventListener("pointermove", function (event) {
   );
 });
 
-window.addEventListener("pointerup", function (event) {
+window.addEventListener("pointerup", function(event) {
   if (dragMode !== "pointer") return;
   if (event.pointerId !== activePointerId) return;
 
@@ -766,7 +759,7 @@ window.addEventListener("pointerup", function (event) {
   );
 });
 
-window.addEventListener("pointercancel", function (event) {
+window.addEventListener("pointercancel", function(event) {
   if (
     dragMode === "pointer" &&
     event.pointerId === activePointerId
@@ -775,9 +768,7 @@ window.addEventListener("pointercancel", function (event) {
   }
 });
 
-// ====================================
 // 7. SEMAK JAWAPAN
-// ====================================
 
 function checkAnswer(choice) {
   if (!started || answered) return;
@@ -796,7 +787,7 @@ function checkAnswer(choice) {
 
     playSound(780);
 
-    setTimeout(function () {
+    setTimeout(function() {
       playSound(1040);
     }, 130);
 
@@ -804,7 +795,7 @@ function checkAnswer(choice) {
       card.disabled = true;
     }
 
-    nextQuestionTimer = setTimeout(function () {
+    nextQuestionTimer = setTimeout(function() {
       if (currentQuestion < questions.length - 1) {
         currentQuestion++;
         showQuestion();
@@ -824,9 +815,7 @@ function checkAnswer(choice) {
   }
 }
 
-// ====================================
 // 8. TAMAT PERMAINAN
-// ====================================
 
 function finishGame() {
   stopDragging();
@@ -841,7 +830,12 @@ function finishGame() {
     '<div class="finish-text">' +
     'Anda berjaya menyelesaikan tugasan.<br>' +
     'Sila ke zon seterusnya. 🌿' +
-    '</div>';
+    '</div>' +
+    '<button class="action" id="playAgainBtn" ' +
+    'type="button">🔄 Main Semula</button>';
+
+  document.getElementById("playAgainBtn")
+    .addEventListener("click", startGame);
 
   cardsEl.innerHTML = "";
   targetEl.textContent = "";
@@ -854,9 +848,7 @@ function finishGame() {
   messageEl.style.color = "#148448";
 }
 
-// ====================================
 // 9. KAMERA AR AUTOMATIK
-// ====================================
 
 async function startCamera() {
   if (tracking || cameraStream) return;
@@ -893,7 +885,7 @@ async function startCamera() {
     await video.play();
 
     hands = new Hands({
-      locateFile: function (file) {
+      locateFile: function(file) {
         return (
           "https://cdn.jsdelivr.net/npm/@mediapipe/hands/" +
           file
@@ -926,7 +918,7 @@ async function startCamera() {
       ". Gunakan tetikus atau sentuhan untuk bermain.";
 
     if (cameraStream) {
-      cameraStream.getTracks().forEach(function (track) {
+      cameraStream.getTracks().forEach(function(track) {
         track.stop();
       });
     }
@@ -935,14 +927,11 @@ async function startCamera() {
   }
 }
 
-// Kamera bermula apabila halaman selesai dimuatkan
-window.addEventListener("load", function () {
+window.addEventListener("load", function() {
   startCamera();
 });
 
-// ====================================
 // 10. PROSES KAMERA
-// ====================================
 
 async function trackFrame() {
   if (!tracking) return;
@@ -966,9 +955,7 @@ async function trackFrame() {
   }
 }
 
-// ====================================
 // 11. KESAN TANGAN DAN CUBITAN
-// ====================================
 
 function onHandResults(results) {
   const landmarks = results.multiHandLandmarks?.[0];
@@ -1055,9 +1042,7 @@ function onHandResults(results) {
   previousPinch = isPinching;
 }
 
-// ====================================
 // 12. KESAN BUNYI
-// ====================================
 
 let audioContext = null;
 
@@ -1077,7 +1062,11 @@ function getAudioContext() {
   return audioContext;
 }
 
-function playSound(frequency, duration = 0.2, volume = 0.09) {
+function playSound(
+  frequency,
+  duration = 0.2,
+  volume = 0.09
+) {
   try {
     const ctx = getAudioContext();
 
@@ -1107,16 +1096,14 @@ function playSound(frequency, duration = 0.2, volume = 0.09) {
   }
 }
 
-// ====================================
 // 13. TUTUP KAMERA
-// ====================================
 
-window.addEventListener("pagehide", function () {
+window.addEventListener("pagehide", function() {
   tracking = false;
   clearTimeout(nextQuestionTimer);
 
   if (cameraStream) {
-    cameraStream.getTracks().forEach(function (track) {
+    cameraStream.getTracks().forEach(function(track) {
       track.stop();
     });
   }
